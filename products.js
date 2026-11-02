@@ -22,7 +22,7 @@ const PRODUTOS = [
     // Produto sem foto: use imagem: "logo.jpg" (aparece a logo da loja).
 
     // --- CERVEJAS LATA (aba "Cervejas Lata") ---
-    { id: 9, nome: "Conti Romarinho 269ml", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/conti-romarinho.jpg" },
+    { id: 9, nome: "Conti Romarinho 269ml", categoria: "cervejas", preco: 2.50, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/conti-romarinho.jpg" },
     { id: 10, nome: "Conti Lata 350ml", categoria: "cervejas", preco: 3.25, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/conti-lata.jpg" },
     { id: 11, nome: "Conti Lat\u00e3o 473ml", categoria: "cervejas", preco: 4.25, volume: "Lat\u00e3o", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
     { id: 12, nome: "Moinho Real Lata 350ml", categoria: "cervejas", preco: 4.00, volume: "Lata", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
