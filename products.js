@@ -29,7 +29,7 @@ const PRODUTOS = [
     { id: 11, nome: "Conti Lat\u00e3o (473ml)", categoria: "cervejas", preco: 4.25, volume: "Lat\u00e3o", descricao: "Cerveja gelada.", imagem: "imagens/conti-latao.png" },
     { id: 12, nome: "Moinho Real Lata (350ml)", categoria: "cervejas", preco: 4.00, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/moinho-real-lata.png" },
     { id: 13, nome: "Moinho Real Ultra (350ml)", categoria: "cervejas", preco: 5.00, volume: "", descricao: "Cerveja gelada.", imagem: "imagens/moinho-real-ultra.png" },
-    { id: 14, nome: "Skol Lata (350ml)", categoria: "cervejas", preco: 3.70, volume: "Lata", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
+    { id: 14, nome: "Skol Lata (350ml)", categoria: "cervejas", preco: 3.70, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/skol-lata.png" },
     { id: 15, nome: "Brahma Lata (350ml)", categoria: "cervejas", preco: 3.99, volume: "Lata", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
     { id: 16, nome: "Antarctica Lata (350ml)", categoria: "cervejas", preco: 3.99, volume: "Lata", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
     { id: 17, nome: "Amstel Lata (350ml)", categoria: "cervejas", preco: 3.99, volume: "Lata", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
