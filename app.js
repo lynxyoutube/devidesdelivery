@@ -1,0 +1,397 @@
+// ===================================================
+// ESTADO DA APLICAÇÃO
+// ===================================================
+let carrinho = JSON.parse(localStorage.getItem('adega_carrinho')) || [];
+let categoriaAtiva = 'todas';
+let termoBusca = '';
+
+// Se houver número salvo no navegador, usa ele, senão usa o padrão do products.js
+let whatsappNumero = localStorage.getItem('adega_whatsapp') || CONFIG.whatsapp;
+let nomeLojaAtual = localStorage.getItem('adega_nome') || CONFIG.nomeLoja;
+
+// ===================================================
+// INICIALIZAÇÃO
+// ===================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const elLoja = document.getElementById('loja-nome');
+    if (elLoja) elLoja.innerText = nomeLojaAtual;
+    const footerLoja = document.getElementById('footer-loja-nome');
+    if (footerLoja) footerLoja.innerText = nomeLojaAtual;
+
+    renderizarProdutos();
+    atualizarCarrinhoVisual();
+});
+
+// ===================================================
+// RENDERIZAÇÃO DOS PRODUTOS
+// ===================================================
+function renderizarProdutos() {
+    const container = document.getElementById('produtos-container');
+    container.innerHTML = '';
+
+    const filtrados = PRODUTOS.filter(produto => {
+        const bateCategoria = categoriaAtiva === 'todas' || produto.categoria === categoriaAtiva;
+        const bateBusca = produto.nome.toLowerCase().includes(termoBusca.toLowerCase()) || 
+                          produto.descricao.toLowerCase().includes(termoBusca.toLowerCase());
+        return bateCategoria && bateBusca;
+    });
+
+    if (filtrados.length === 0) {
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6b7280;">
+                <p style="font-size: 1.1rem; font-weight: 500;">Nenhuma bebida encontrada.</p>
+                <p style="font-size: 0.9rem; margin-top: 6px;">Tente pesquisar por outro nome ou mudar a categoria.</p>
+            </div>
+        `;
+        return;
+    }
+
+    filtrados.forEach(produto => {
+        const itemNoCarrinho = carrinho.find(item => item.id === produto.id);
+        const quantidade = itemNoCarrinho ? itemNoCarrinho.qtd : 0;
+
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+            <div class="product-image-container">
+                <img src="${produto.imagem}" alt="${produto.nome}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=500&auto=format&fit=crop&q=60'">
+                <span class="product-volume-tag">${produto.volume}</span>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">${produto.nome}</h3>
+                <p class="product-desc">${produto.descricao}</p>
+                
+                <div class="product-footer">
+                    <span class="product-price">R$ ${produto.preco.toFixed(2).replace('.', ',')}</span>
+                    
+                    <div id="btn-container-${produto.id}">
+                        ${quantidade === 0 ? `
+                            <button class="add-btn" onclick="adicionarAoCarrinho(${produto.id})">
+                                + Adicionar
+                            </button>
+                        ` : `
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="alterarQuantidade(${produto.id}, -1)">-</button>
+                                <span class="qty-number">${quantidade}</span>
+                                <button class="qty-btn" onclick="alterarQuantidade(${produto.id}, 1)">+</button>
+                            </div>
+                        `}
+                    </div>
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+// ===================================================
+// FILTROS E BUSCA
+// ===================================================
+function selecionarCategoria(categoria, btnElement) {
+    categoriaAtiva = categoria;
+    
+    // Atualiza classes ativas nos botões
+    document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+    if (btnElement) {
+        btnElement.classList.add('active');
+    }
+
+    renderizarProdutos();
+}
+
+function filtrarProdutos() {
+    termoBusca = document.getElementById('search-input').value.trim();
+    renderizarProdutos();
+}
+
+// ===================================================
+// GERENCIAMENTO DO CARRINHO
+// ===================================================
+function adicionarAoCarrinho(idProduto) {
+    const produto = PRODUTOS.find(p => p.id === idProduto);
+    if (!produto) return;
+
+    const itemExistente = carrinho.find(item => item.id === idProduto);
+    if (itemExistente) {
+        itemExistente.qtd += 1;
+    } else {
+        carrinho.push({
+            id: produto.id,
+            nome: produto.nome,
+            preco: produto.preco,
+            volume: produto.volume,
+            qtd: 1
+        });
+    }
+
+    salvarEAtualizar();
+}
+
+function alterarQuantidade(idProduto, variacao) {
+    const index = carrinho.findIndex(item => item.id === idProduto);
+    if (index === -1) return;
+
+    carrinho[index].qtd += variacao;
+
+    if (carrinho[index].qtd <= 0) {
+        carrinho.splice(index, 1);
+    }
+
+    salvarEAtualizar();
+}
+
+function salvarEAtualizar() {
+    localStorage.setItem('adega_carrinho', JSON.stringify(carrinho));
+    atualizarCarrinhoVisual();
+    renderizarProdutos();
+}
+
+function calcularTotais() {
+    let subtotal = 0;
+    let totalItens = 0;
+
+    carrinho.forEach(item => {
+        subtotal += item.preco * item.qtd;
+        totalItens += item.qtd;
+    });
+
+    const taxa = CONFIG.taxaEntregaFixa || 0;
+    const total = subtotal + taxa;
+
+    return { subtotal, taxa, total, totalItens };
+}
+
+function atualizarCarrinhoVisual() {
+    const { subtotal, total, totalItens } = calcularTotais();
+
+    // Contadores
+    document.getElementById('cart-counter').innerText = totalItens;
+
+    // Barra mobile
+    const mobileBar = document.getElementById('mobile-cart-bar');
+    if (totalItens > 0) {
+        mobileBar.style.display = 'flex';
+        document.getElementById('mobile-cart-count').innerText = `${totalItens} ${totalItens === 1 ? 'item' : 'itens'}`;
+        document.getElementById('mobile-cart-total').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    } else {
+        mobileBar.style.display = 'none';
+    }
+
+    // Gaveta do Carrinho
+    const container = document.getElementById('cart-items-container');
+    const formSection = document.getElementById('checkout-form-section');
+    const btnFinalizar = document.getElementById('btn-finalizar');
+
+    if (carrinho.length === 0) {
+        container.innerHTML = `
+            <div class="cart-empty">
+                <p style="font-size: 2.2rem; margin-bottom: 8px;">🛒</p>
+                <p style="font-weight: 600; color: #374151;">Seu carrinho está vazio</p>
+                <p style="font-size: 0.85rem; margin-top: 4px;">Adicione energéticos, cervejas e bebidas para pedir!</p>
+            </div>
+        `;
+        formSection.style.display = 'none';
+        btnFinalizar.disabled = true;
+    } else {
+        formSection.style.display = 'block';
+        btnFinalizar.disabled = false;
+
+        let html = '';
+        carrinho.forEach(item => {
+            const itemTotal = item.preco * item.qtd;
+            html += `
+                <div class="cart-item">
+                    <div style="flex: 1; padding-right: 8px;">
+                        <div class="cart-item-name">${item.nome}</div>
+                        <div class="cart-item-sub">R$ ${item.preco.toFixed(2).replace('.', ',')} un. (${item.volume})</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="alterarQuantidade(${item.id}, -1)">-</button>
+                            <span class="qty-number">${item.qtd}</span>
+                            <button class="qty-btn" onclick="alterarQuantidade(${item.id}, 1)">+</button>
+                        </div>
+                        <span class="cart-item-price">R$ ${itemTotal.toFixed(2).replace('.', ',')}</span>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    // Totais no rodapé do drawer
+    document.getElementById('resumo-subtotal').innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+    document.getElementById('resumo-total').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+}
+
+// ===================================================
+// CONTROLES DE INTERFACE DO CHECKOUT
+// ===================================================
+function abrirCarrinho() {
+    document.getElementById('cart-modal').classList.add('open');
+    document.body.style.overflow = 'hidden'; // Impede rolar a página por trás
+}
+
+function fecharCarrinho() {
+    document.getElementById('cart-modal').classList.remove('open');
+    document.body.style.overflow = 'auto';
+}
+
+function fecharCarrinhoSeClicarFora(event) {
+    if (event.target.id === 'cart-modal') {
+        fecharCarrinho();
+    }
+}
+
+function toggleTipoEntrega() {
+    const tipo = document.querySelector('input[name="tipoEntrega"]:checked').value;
+    const enderecoCampos = document.getElementById('endereco-campos');
+    if (tipo === 'Retirada no Local') {
+        enderecoCampos.style.display = 'none';
+    } else {
+        enderecoCampos.style.display = 'block';
+    }
+}
+
+function toggleTroco() {
+    const forma = document.getElementById('forma-pagamento').value;
+    const trocoContainer = document.getElementById('troco-container');
+    if (forma === 'Dinheiro') {
+        trocoContainer.style.display = 'block';
+    } else {
+        trocoContainer.style.display = 'none';
+    }
+}
+
+// ===================================================
+// ENVIAR PEDIDO DIRETAMENTE PARA O WHATSAPP
+// ===================================================
+function enviarPedidoWhatsApp() {
+    if (carrinho.length === 0) {
+        alert('Seu carrinho está vazio! Adicione algum produto antes de finalizar.');
+        return;
+    }
+
+    const nome = document.getElementById('cliente-nome').value.trim();
+    if (!nome) {
+        alert('Por favor, informe seu nome.');
+        document.getElementById('cliente-nome').focus();
+        return;
+    }
+
+    const tipoEntrega = document.querySelector('input[name="tipoEntrega"]:checked').value;
+    let rua = '';
+    let numero = '';
+    let bairro = '';
+    let complemento = '';
+
+    if (tipoEntrega === 'Entrega em Domicílio') {
+        rua = document.getElementById('cliente-rua').value.trim();
+        numero = document.getElementById('cliente-numero').value.trim();
+        bairro = document.getElementById('cliente-bairro').value.trim();
+        complemento = document.getElementById('cliente-complemento').value.trim();
+
+        if (!rua) {
+            alert('Por favor, informe a Rua/Avenida para entrega.');
+            document.getElementById('cliente-rua').focus();
+            return;
+        }
+        if (!numero) {
+            alert('Por favor, informe o Número da residência.');
+            document.getElementById('cliente-numero').focus();
+            return;
+        }
+        if (!bairro) {
+            alert('Por favor, informe o Bairro.');
+            document.getElementById('cliente-bairro').focus();
+            return;
+        }
+    }
+
+    const telefone = document.getElementById('cliente-telefone').value.trim();
+    const formaPagamento = document.getElementById('forma-pagamento').value;
+    const troco = document.getElementById('troco-para').value.trim();
+    const obs = document.getElementById('cliente-obs').value.trim();
+
+    const { total } = calcularTotais();
+
+    // FORMATAR MENSAGEM DO WHATSAPP
+    let mensagem = `*NOVO PEDIDO - ${nomeLojaAtual.toUpperCase()}*\n`;
+    mensagem += `─────────────────────────\n`;
+    mensagem += `*CLIENTE:* ${nome}\n`;
+    if (telefone) mensagem += `*TELEFONE:* ${telefone}\n`;
+    mensagem += `*TIPO:* ${tipoEntrega}\n`;
+
+    if (tipoEntrega === 'Entrega em Domicílio') {
+        mensagem += `*ENDEREÇO DE ENTREGA:*\n`;
+        mensagem += `📍 ${rua}, Nº ${numero}\n`;
+        mensagem += `📍 Bairro: ${bairro}\n`;
+        if (complemento) mensagem += `📍 Ref/Comp: ${complemento}\n`;
+    }
+
+    mensagem += `─────────────────────────\n`;
+    mensagem += `*ITENS DO PEDIDO:*\n`;
+
+    carrinho.forEach(item => {
+        const itemTotal = (item.preco * item.qtd).toFixed(2).replace('.', ',');
+        mensagem += `▪️ ${item.qtd}x ${item.nome} (${item.volume}) - R$ ${itemTotal}\n`;
+    });
+
+    mensagem += `─────────────────────────\n`;
+    mensagem += `*TOTAL DO PEDIDO:* R$ ${total.toFixed(2).replace('.', ',')}\n`;
+    mensagem += `*PAGAMENTO:* ${formaPagamento}\n`;
+
+    if (formaPagamento === 'Dinheiro' && troco) {
+        mensagem += `*TROCO:* ${troco}\n`;
+    }
+
+    if (obs) {
+        mensagem += `*OBSERVAÇÃO:* ${obs}\n`;
+    }
+
+    mensagem += `─────────────────────────\n`;
+    mensagem += `_Pedido gerado pelo site da adega._`;
+
+    // Codifica a mensagem para a URL
+    const mensagemEncoded = encodeURIComponent(mensagem);
+
+    // Formata o número de WhatsApp (remove qualquer caractere não numérico)
+    let numeroZapLimpo = (whatsappNumero || CONFIG.whatsapp).replace(/\D/g, '');
+
+    // Se o número ainda estiver com o padrão de exemplo, avisa o dono do comércio
+    if (numeroZapLimpo === '5511999999999' || !numeroZapLimpo) {
+        const novoZap = prompt('Atenção: Configure o seu número de WhatsApp com DDD para receber os pedidos (Ex: 5511988887777):', '55');
+        if (novoZap && novoZap.trim().length >= 10) {
+            numeroZapLimpo = novoZap.replace(/\D/g, '');
+            localStorage.setItem('adega_whatsapp', numeroZapLimpo);
+            whatsappNumero = numeroZapLimpo;
+        } else {
+            alert('Você precisa configurar seu número de WhatsApp para receber os pedidos!');
+            return;
+        }
+    }
+
+    const urlZap = `https://api.whatsapp.com/send?phone=${numeroZapLimpo}&text=${mensagemEncoded}`;
+
+    // Abre o WhatsApp
+    window.open(urlZap, '_blank');
+}
+
+// ===================================================
+// CONFIGURAÇÃO RÁPIDA (PARA O DONO DO COMÉRCIO)
+// ===================================================
+function alterarNumeroZap() {
+    const zapAtual = localStorage.getItem('adega_whatsapp') || CONFIG.whatsapp;
+
+    const novoZap = prompt('Digite o seu número de WhatsApp com 55 e DDD (Apenas números):\nSeu número na arte é 99604-9894.\nExemplo com DDD 11: 5511996049894\nExemplo com DDD 19: 5519996049894', zapAtual);
+    if (novoZap && novoZap.trim()) {
+        const limpo = novoZap.replace(/\D/g, '');
+        if (limpo.length >= 10) {
+            localStorage.setItem('adega_whatsapp', limpo);
+            whatsappNumero = limpo;
+            alert(`WhatsApp atualizado com sucesso para: ${limpo}`);
+        } else {
+            alert('Número inválido. Lembre de colocar com 55 e o DDD da sua região.');
+        }
+    }
+}
