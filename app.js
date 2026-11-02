@@ -188,6 +188,7 @@ function renderizarProdutos() {
 
     const TITULOS_SECAO = {
         cervejas: 'Cervejas Lata',
+        garrafinhas: 'Garrafinhas',
         longneck: 'Long Neck',
         energeticos: 'Energ&eacute;ticos',
         refrigerantes: 'Refrigerantes e &Aacute;gua',

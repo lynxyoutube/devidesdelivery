@@ -9,7 +9,7 @@ const CONFIG = {
     // Etiqueta verde pequena em cima da foto (mostra o campo volume do produto). true = mostrar
     mostrarEtiquetaVolume: false,
     // Categorias com bebida alcoólica: ficam bloqueadas para quem disser que é menor de 18 anos
-    categoriasAlcoolicas: ["cervejas", "longneck", "drinks", "combos", "destilados"],
+    categoriasAlcoolicas: ["cervejas", "garrafinhas", "longneck", "drinks", "combos", "destilados"],
     mensagemAviso: "Pediu, chegou, gelou! • Distribuidora de Bebidas • Delivery e Retirada"
 };
 
@@ -24,7 +24,6 @@ const PRODUTOS = [
     // Produto sem foto: use imagem: "logo.jpg" (aparece a logo da loja).
 
     // --- CERVEJAS LATA (aba "Cervejas Lata") ---
-    { id: 9, nome: "Conti Romarinho (300ml)", categoria: "cervejas", preco: 2.50, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/conti-romarinho.jpg" },
     { id: 10, nome: "Conti Lata (350ml)", categoria: "cervejas", preco: 3.25, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/conti-lata.jpg" },
     { id: 11, nome: "Conti Lat\u00e3o (473ml)", categoria: "cervejas", preco: 4.25, volume: "Lat\u00e3o", descricao: "Cerveja gelada.", imagem: "imagens/conti-latao.jpg" },
     { id: 12, nome: "Moinho Real Lata (350ml)", categoria: "cervejas", preco: 4.00, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/moinho-real-lata.jpg" },
@@ -35,10 +34,13 @@ const PRODUTOS = [
     { id: 17, nome: "Amstel Lata (350ml)", categoria: "cervejas", preco: 3.99, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/amstel-lata.jpg" },
     { id: 18, nome: "Imp\u00e9rio Lata (350ml)", categoria: "cervejas", preco: 3.89, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/imperio-lata.jpg" },
     { id: 19, nome: "Heineken Lata (350ml)", categoria: "cervejas", preco: 6.00, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/heineken-lata.jpg" },
-    { id: 20, nome: "Brahma Romarinho (300ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/brahma-romarinho.jpg" },
-    { id: 21, nome: "Skol Romarinho (300ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/skol-romarinho.jpg" },
-    { id: 22, nome: "Antarctica Romarinho (300ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/antarctica-romarinho.jpg" },
-    { id: 23, nome: "Original Garrafinha (300ml)", categoria: "cervejas", preco: 3.79, volume: "", descricao: "Cerveja gelada.", imagem: "imagens/original-garrafinha.jpg" },
+
+    // --- GARRAFINHAS / ROMARINHO 300ml (aba "Garrafinhas") ---
+    { id: 9, nome: "Conti Romarinho (300ml)", categoria: "garrafinhas", preco: 2.50, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/conti-romarinho.jpg" },
+    { id: 20, nome: "Brahma Romarinho (300ml)", categoria: "garrafinhas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/brahma-romarinho.jpg" },
+    { id: 21, nome: "Skol Romarinho (300ml)", categoria: "garrafinhas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/skol-romarinho.jpg" },
+    { id: 22, nome: "Antarctica Romarinho (300ml)", categoria: "garrafinhas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/antarctica-romarinho.jpg" },
+    { id: 23, nome: "Original Garrafinha (300ml)", categoria: "garrafinhas", preco: 3.79, volume: "", descricao: "Cerveja gelada.", imagem: "imagens/original-garrafinha.jpg" },
 
     // --- LONG NECK ---
     { id: 24, nome: "Heineken", categoria: "longneck", preco: 7.00, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "logo.jpg" },
