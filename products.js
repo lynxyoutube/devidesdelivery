@@ -1,3 +1,4 @@
+
 // CONFIGURAÇÃO DA SUA LOJA
 const CONFIG = {
     nomeLoja: "Devides Delivery",
@@ -12,6 +13,8 @@ const CONFIG = {
 
 // CATÁLOGO DE BEBIDAS
 // Você pode alterar os preços, nomes e adicionar quantos produtos quiser aqui!
+// As fotos abaixo são apenas de demonstração (Unsplash). Troque pelas fotos reais dos seus produtos
+// colocando o arquivo na pasta do site e usando o nome dele, ex: imagem: "baly-tradicional.jpg"
 const PRODUTOS = [
     // --- ENERGÉTICOS ---
     {
@@ -21,7 +24,7 @@ const PRODUTOS = [
         preco: 13.90,
         volume: "2 Litros",
         descricao: "Garrafa 2L tradicional bem gelada.",
-        imagem: "https://images.unsplash.com/photo-1622543925917-763c34d1a86e?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/energetico-monster.jpg"
     },
     {
         id: 2,
@@ -30,7 +33,7 @@ const PRODUTOS = [
         preco: 13.90,
         volume: "2 Litros",
         descricao: "Garrafa 2L sabor melancia gelada.",
-        imagem: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/energetico-redbull.jpg"
     },
     {
         id: 3,
@@ -39,7 +42,7 @@ const PRODUTOS = [
         preco: 13.90,
         volume: "2 Litros",
         descricao: "Garrafa 2L sabor maçã verde.",
-        imagem: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/energetico-verde.jpg"
     },
     {
         id: 4,
@@ -48,7 +51,7 @@ const PRODUTOS = [
         preco: 13.90,
         volume: "2 Litros",
         descricao: "Garrafa 2L sabor tropical.",
-        imagem: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/energetico-monster.jpg"
     },
     {
         id: 5,
@@ -57,7 +60,7 @@ const PRODUTOS = [
         preco: 6.50,
         volume: "473ml",
         descricao: "Lata 473ml gelada.",
-        imagem: "https://images.unsplash.com/photo-1622543925917-763c34d1a86e?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/energetico-redbull.jpg"
     },
     {
         id: 6,
@@ -66,7 +69,7 @@ const PRODUTOS = [
         preco: 6.50,
         volume: "473ml",
         descricao: "Lata 473ml melancia gelada.",
-        imagem: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/energetico-verde.jpg"
     },
 
     // --- CERVEJAS ---
@@ -77,7 +80,7 @@ const PRODUTOS = [
         preco: 4.00,
         volume: "350ml",
         descricao: "Lata 350ml gelada.",
-        imagem: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/cerveja-lata-2.jpg"
     },
     {
         id: 8,
@@ -86,7 +89,7 @@ const PRODUTOS = [
         preco: 5.50,
         volume: "473ml",
         descricao: "Latão 473ml bem gelado.",
-        imagem: "https://images.unsplash.com/photo-1584225064785-c62a8b43d148?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/cerveja-lata-1.jpg"
     },
     {
         id: 9,
@@ -95,7 +98,7 @@ const PRODUTOS = [
         preco: 45.00,
         volume: "12x 350ml",
         descricao: "Pacote fechado com 12 latas.",
-        imagem: "https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/cerveja-fardo.jpg"
     },
     {
         id: 10,
@@ -104,7 +107,7 @@ const PRODUTOS = [
         preco: 8.50,
         volume: "330ml",
         descricao: "Long neck 330ml gelada.",
-        imagem: "https://images.unsplash.com/photo-1618886614638-80e3c15cd895?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/cerveja-lata-3.jpg"
     },
     {
         id: 11,
@@ -113,7 +116,7 @@ const PRODUTOS = [
         preco: 4.80,
         volume: "350ml",
         descricao: "Lata 350ml gelada.",
-        imagem: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/cerveja-lata-2.jpg"
     },
 
     // --- DESTILADOS & GINS ---
@@ -124,7 +127,7 @@ const PRODUTOS = [
         preco: 10.00,
         volume: "Garrafinha",
         descricao: "Garrafinha dose para misturar com Baly.",
-        imagem: "https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/gin-1.jpg"
     },
     {
         id: 13,
@@ -133,7 +136,7 @@ const PRODUTOS = [
         preco: 32.00,
         volume: "1 Litro",
         descricao: "Garrafa 1 Litro lacrada.",
-        imagem: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/gin-2.jpg"
     },
     {
         id: 14,
@@ -142,7 +145,7 @@ const PRODUTOS = [
         preco: 42.00,
         volume: "998ml",
         descricao: "Garrafa 998ml original.",
-        imagem: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/vodka.jpg"
     },
     {
         id: 15,
@@ -151,7 +154,7 @@ const PRODUTOS = [
         preco: 98.00,
         volume: "1 Litro",
         descricao: "Garrafa 1 Litro original lacrada.",
-        imagem: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/whisky.jpg"
     },
 
     // --- REFRIGERANTES & GELO ---
@@ -162,7 +165,7 @@ const PRODUTOS = [
         preco: 11.50,
         volume: "2 Litros",
         descricao: "Garrafa 2L gelada.",
-        imagem: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/refrigerante-cola.jpg"
     },
     {
         id: 17,
@@ -171,7 +174,7 @@ const PRODUTOS = [
         preco: 9.50,
         volume: "2 Litros",
         descricao: "Garrafa 2L gelada.",
-        imagem: "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/refrigerante-cola.jpg"
     },
     {
         id: 18,
@@ -180,7 +183,7 @@ const PRODUTOS = [
         preco: 12.00,
         volume: "5kg",
         descricao: "Pacote de gelo em cubos 5kg.",
-        imagem: "https://images.unsplash.com/photo-1517824806704-9040b037703b?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/gelo.jpg"
     },
     {
         id: 19,
@@ -189,6 +192,6 @@ const PRODUTOS = [
         preco: 4.50,
         volume: "Copão",
         descricao: "Gelo saborizado para drinks.",
-        imagem: "https://images.unsplash.com/photo-1546171753-97d7676e4602?w=500&auto=format&fit=crop&q=60"
+        imagem: "imagens/gelo.jpg"
     }
 ];
