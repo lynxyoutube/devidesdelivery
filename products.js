@@ -38,7 +38,7 @@ const PRODUTOS = [
     { id: 20, nome: "Brahma Romarinho (300ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/brahma-romarinho.png" },
     { id: 21, nome: "Skol Romarinho (300ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/skol-romarinho.png" },
     { id: 22, nome: "Antarctica Romarinho (300ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/antarctica-romarinho.png" },
-    { id: 23, nome: "Original", categoria: "cervejas", preco: 3.79, volume: "", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
+    { id: 23, nome: "Original Lata (269ml)", categoria: "cervejas", preco: 3.79, volume: "", descricao: "Cerveja gelada.", imagem: "imagens/original-lata.png" },
 
     // --- LONG NECK ---
     { id: 24, nome: "Heineken", categoria: "longneck", preco: 7.00, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "logo.jpg" },
