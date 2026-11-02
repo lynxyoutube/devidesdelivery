@@ -215,7 +215,7 @@ function renderizarProdutos() {
         card.className = 'product-card';
         card.innerHTML = `
             <div class="product-image-container">
-                <img src="${produto.imagem}" alt="${produto.nome}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=500&auto=format&fit=crop&q=60'">
+                <img src="${produto.imagem}" alt="${produto.nome}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='logo.jpg'">
                 ${(CONFIG.mostrarEtiquetaVolume && produto.volume) ? `<span class="product-volume-tag">${produto.volume}</span>` : ''}
             </div>
             <div class="product-info">
