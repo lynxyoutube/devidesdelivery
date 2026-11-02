@@ -743,6 +743,91 @@ h1, h2, h3, .brand-name, .drawer-title, .product-price, .mobile-cart-total {
 }
 
 /* ===================================================
+   VERIFICAÇÃO DE IDADE (+18)
+   =================================================== */
+.age-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 9, 11, 0.96);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.age-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card), var(--shadow-gold);
+    max-width: 400px;
+    width: 100%;
+    padding: 28px 22px 22px;
+    text-align: center;
+    margin: auto;
+}
+
+.age-logo {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold-primary);
+    margin-bottom: 14px;
+}
+
+.age-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.age-btn {
+    display: block;
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    margin-bottom: 10px;
+    transition: filter 0.15s, transform 0.15s, border-color 0.15s;
+}
+
+.age-yes {
+    background: var(--gold-gradient);
+    color: #0d0e11;
+    border: none;
+    box-shadow: var(--shadow-gold);
+}
+
+.age-yes:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+.age-no {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.age-no:hover {
+    color: #ffffff;
+    border-color: var(--text-secondary);
+}
+
+.age-note {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+}
+
+/* ===================================================
    BOTÃO FLUTUANTE DE WHATSAPP
    =================================================== */
 .whatsapp-float {
