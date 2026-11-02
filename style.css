@@ -1041,3 +1041,141 @@ h1, h2, h3, .brand-name, .drawer-title, .product-price, .mobile-cart-total {
         gap: 20px;
     }
 }
+
+
+/* ===================================================
+   CARDAPIO EM CARDS HORIZONTAIS (foto a esquerda)
+   =================================================== */
+.products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+}
+
+.product-card {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px;
+    border-radius: var(--radius-lg);
+}
+
+.product-image-container {
+    width: 96px;
+    height: 96px;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+}
+
+.product-volume-tag {
+    bottom: 4px;
+    left: 4px;
+    font-size: 0.64rem;
+    padding: 1px 5px;
+}
+
+.product-info {
+    padding: 0;
+    min-width: 0;
+    align-self: stretch;
+}
+
+.product-title {
+    font-size: 1.02rem;
+    margin-bottom: 3px;
+    min-height: 0;
+}
+
+.product-desc {
+    font-size: 0.82rem;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.product-footer {
+    border-top: none;
+    padding-top: 0;
+    margin-top: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.product-price {
+    background: var(--gold-primary);
+    color: #0d0e11;
+    padding: 4px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 1.05rem;
+}
+
+.add-btn {
+    width: auto;
+    padding: 7px 12px;
+    font-size: 0.84rem;
+}
+
+.qty-control {
+    width: auto;
+    padding: 2px 5px;
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .product-image-container {
+        width: 96px;
+        height: 96px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .products-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .product-card {
+        padding: 10px;
+        gap: 12px;
+    }
+    .product-image-container {
+        width: 88px;
+        height: 88px;
+    }
+    .product-info {
+        padding: 0;
+    }
+    .product-title {
+        font-size: 0.98rem;
+        min-height: 0;
+        -webkit-line-clamp: unset;
+        display: block;
+    }
+    .product-desc {
+        display: block;
+        font-size: 0.8rem;
+    }
+    .product-footer {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        padding-top: 0;
+    }
+    .add-btn {
+        width: auto;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+    .qty-control {
+        width: auto;
+    }
+}
