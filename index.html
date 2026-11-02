@@ -4,12 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Devides Delivery - Pediu, chegou, gelou!</title>
+    <meta name="description" content="Devides Delivery: distribuidora de bebidas com delivery e retirada. Energéticos Baly, cervejas, destilados, refrigerantes e gelo. Pediu, chegou, gelou!">
+    <meta name="theme-color" content="#111216">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Devides Delivery - Pediu, chegou, gelou!">
+    <meta property="og:description" content="Bebidas geladas com delivery e retirada. Peça direto pelo WhatsApp.">
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <link rel="apple-touch-icon" href="logo.jpg">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <!-- VERIFICAÇÃO DE IDADE (aparece só na primeira visita) -->
+    <div class="age-overlay" id="age-gate" role="dialog" aria-modal="true" aria-labelledby="age-title" style="display: none;">
+        <div class="age-box">
+            <img src="logo.jpg" alt="Devides Delivery" class="age-logo">
+            <h2 id="age-title" class="age-title">Você tem 18 anos ou mais?</h2>
+            <button class="age-btn age-yes" onclick="responderIdade(true)">Sim, tenho 18 anos ou mais</button>
+            <button class="age-btn age-no" onclick="responderIdade(false)">Não, tenho menos de 18</button>
+            <p class="age-note">Beba com moderação. Se beber, não dirija.</p>
+        </div>
+    </div>
 
     <!-- CABEÇALHO COM A LOGO DA MARCA -->
     <header class="header">
@@ -50,8 +68,8 @@
             <nav class="categories-nav">
                 <button class="cat-btn active" onclick="selecionarCategoria('todas', this)">Todas as Bebidas</button>
                 <button class="cat-btn" onclick="selecionarCategoria('energeticos', this)">⚡ Baly (Energéticos)</button>
-                <button class="cat-btn" onclick="selecionarCategoria('cervejas', this)">🍺 Cervejas (Skol...)</button>
-                <button class="cat-btn" onclick="selecionarCategoria('destilados', this)">🍸 Gin & Destilados</button>
+                <button class="cat-btn" data-categoria="cervejas" onclick="selecionarCategoria('cervejas', this)">🍺 Cervejas (Skol...)</button>
+                <button class="cat-btn" data-categoria="destilados" onclick="selecionarCategoria('destilados', this)">🍸 Gin & Destilados</button>
                 <button class="cat-btn" onclick="selecionarCategoria('refrigerantes', this)">🥤 Refrigerantes</button>
                 <button class="cat-btn" onclick="selecionarCategoria('gelo', this)">🧊 Gelo & Copão</button>
             </nav>
