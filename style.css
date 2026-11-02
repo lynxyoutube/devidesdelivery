@@ -965,12 +965,35 @@ h1, h2, h3, .brand-name, .drawer-title, .product-price, .mobile-cart-total {
         height: 42px;
     }
 
+    .brand-wrapper {
+        gap: 10px;
+    }
+
+    /* Nome SEMPRE completo no celular: quebra em 2 linhas (DEVIDES / DELIVERY) em vez de cortar com "..." */
     .brand-name {
-        font-size: 1.05rem;
+        font-size: 1.12rem;
+        line-height: 1.05;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+    }
+
+    .brand-name span {
+        display: block;
     }
 
     .brand-slogan {
         font-size: 0.7rem;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        line-height: 1.2;
+    }
+
+    /* 16px evita o zoom automatico do iPhone ao tocar na busca */
+    .search-box input {
+        font-size: 16px;
+        padding: 12px 14px;
     }
 
     .cart-header-btn {
