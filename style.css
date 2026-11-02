@@ -2,6 +2,7 @@
    DEVIDES DELIVERY - IDENTIDADE VISUAL DARK & GOLD
    =================================================== */
 :root {
+    color-scheme: dark; /* site ja e escuro: impede o modo escuro forcado do celular de alterar as cores */
     --bg-page: #0d0e11;
     --bg-card: #15161a;
     --bg-card-hover: #1b1c22;
@@ -42,6 +43,8 @@
 
 html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 body {
