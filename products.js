@@ -35,7 +35,7 @@ const PRODUTOS = [
     { id: 17, nome: "Amstel Lata (350ml)", categoria: "cervejas", preco: 3.99, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/amstel-lata.png" },
     { id: 18, nome: "Imp\u00e9rio Lata (350ml)", categoria: "cervejas", preco: 3.89, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/imperio-lata.png" },
     { id: 19, nome: "Heineken Lata (350ml)", categoria: "cervejas", preco: 6.00, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/heineken-lata.png" },
-    { id: 20, nome: "Brahma Romarinho (269ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
+    { id: 20, nome: "Brahma Romarinho (269ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/brahma-romarinho.png" },
     { id: 21, nome: "Skol Romarinho (269ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
     { id: 22, nome: "Antarctica Romarinho (269ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
     { id: 23, nome: "Original", categoria: "cervejas", preco: 3.79, volume: "", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
