@@ -24,7 +24,7 @@ const PRODUTOS = [
     // Produto sem foto: use imagem: "logo.jpg" (aparece a logo da loja).
 
     // --- CERVEJAS LATA (aba "Cervejas Lata") ---
-    { id: 9, nome: "Conti Romarinho (269ml)", categoria: "cervejas", preco: 2.50, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/conti-romarinho.png" },
+    { id: 9, nome: "Conti Romarinho (300ml)", categoria: "cervejas", preco: 2.50, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/conti-romarinho.png" },
     { id: 10, nome: "Conti Lata (350ml)", categoria: "cervejas", preco: 3.25, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/conti-lata.png" },
     { id: 11, nome: "Conti Lat\u00e3o (473ml)", categoria: "cervejas", preco: 4.25, volume: "Lat\u00e3o", descricao: "Cerveja gelada.", imagem: "imagens/conti-latao.png" },
     { id: 12, nome: "Moinho Real Lata (350ml)", categoria: "cervejas", preco: 4.00, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/moinho-real-lata.png" },
@@ -35,9 +35,9 @@ const PRODUTOS = [
     { id: 17, nome: "Amstel Lata (350ml)", categoria: "cervejas", preco: 3.99, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/amstel-lata.png" },
     { id: 18, nome: "Imp\u00e9rio Lata (350ml)", categoria: "cervejas", preco: 3.89, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/imperio-lata.png" },
     { id: 19, nome: "Heineken Lata (350ml)", categoria: "cervejas", preco: 6.00, volume: "Lata", descricao: "Cerveja gelada.", imagem: "imagens/heineken-lata.png" },
-    { id: 20, nome: "Brahma Romarinho (269ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/brahma-romarinho.png" },
+    { id: 20, nome: "Brahma Romarinho (300ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/brahma-romarinho.png" },
     { id: 21, nome: "Skol Romarinho (300ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/skol-romarinho.png" },
-    { id: 22, nome: "Antarctica Romarinho (269ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
+    { id: 22, nome: "Antarctica Romarinho (300ml)", categoria: "cervejas", preco: 2.99, volume: "Romarinho", descricao: "Cerveja gelada.", imagem: "imagens/antarctica-romarinho.png" },
     { id: 23, nome: "Original", categoria: "cervejas", preco: 3.79, volume: "", descricao: "Cerveja gelada.", imagem: "logo.jpg" },
 
     // --- LONG NECK ---
