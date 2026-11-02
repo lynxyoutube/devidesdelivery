@@ -12,8 +12,10 @@
     <meta property="og:title" content="Devides Delivery - Pediu, chegou, gelou!">
     <meta property="og:description" content="Bebidas geladas com delivery e retirada. Peça direto pelo WhatsApp.">
     <link rel="icon" type="image/jpeg" href="logo.jpg">
-    <link rel="apple-touch-icon" href="logo.jpg">
-    <link rel="stylesheet" href="style.css?v=202611021715">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Devides">
+    <link rel="stylesheet" href="style.css?v=202611021719">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -53,6 +55,13 @@
             </button>
         </div>
     </header>
+
+    <!-- AVISO PARA INSTALAR O APP (so aparece quando o navegador permite instalar) -->
+    <div class="install-banner" id="install-banner" hidden>
+        <span class="install-text">&#128242; Instale o app da Devides no seu celular</span>
+        <button type="button" class="install-btn" id="install-btn">Instalar</button>
+        <button type="button" class="install-close" id="install-close" aria-label="Fechar">&times;</button>
+    </div>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-container">
@@ -220,8 +229,8 @@
     </footer>
 
     <!-- SCRIPTS -->
-    <script src="products.js?v=202611021715"></script>
-    <script src="app.js?v=202611021715"></script>
+    <script src="products.js?v=202611021719"></script>
+    <script src="app.js?v=202611021719"></script>
 <script>
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {

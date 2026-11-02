@@ -541,3 +541,53 @@ function enviarPedidoWhatsApp() {
     window.open(urlZap, '_blank');
 }
 
+// ===== INSTALAR O APP (botao "Instalar") =====
+(function () {
+    var banner = document.getElementById('install-banner');
+    var btnInstalar = document.getElementById('install-btn');
+    var btnFechar = document.getElementById('install-close');
+    if (!banner || !btnInstalar || !btnFechar) { return; }
+    var eventoInstalar = null;
+    var CHAVE = 'devides_instalar_fechado';
+
+    function jaInstalado() {
+        return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+    }
+    function fechadoAntes() {
+        try { return localStorage.getItem(CHAVE) === '1'; } catch (e) { return false; }
+    }
+    function mostrar() {
+        if (jaInstalado() || fechadoAntes()) { return; }
+        banner.hidden = false;
+    }
+
+    window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault();
+        eventoInstalar = e;
+        mostrar();
+    });
+    window.addEventListener('appinstalled', function () {
+        banner.hidden = true;
+        eventoInstalar = null;
+    });
+
+    // iPhone/iPad (Safari) nao tem botao automatico: mostra o aviso com o passo a passo
+    var ehIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    if (ehIOS) { mostrar(); }
+
+    btnInstalar.addEventListener('click', function () {
+        if (eventoInstalar) {
+            eventoInstalar.prompt();
+            eventoInstalar.userChoice.then(function () {
+                eventoInstalar = null;
+                banner.hidden = true;
+            });
+        } else if (ehIOS) {
+            alert('Para instalar: toque no bot\u00e3o Compartilhar (quadrado com seta) e depois em "Adicionar \u00e0 Tela de In\u00edcio".');
+        }
+    });
+    btnFechar.addEventListener('click', function () {
+        banner.hidden = true;
+        try { localStorage.setItem(CHAVE, '1'); } catch (e) {}
+    });
+})();
