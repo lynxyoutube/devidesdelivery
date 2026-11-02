@@ -2,6 +2,7 @@
 // ESTADO DA APLICAÇÃO
 // ===================================================
 let carrinho = JSON.parse(localStorage.getItem('adega_carrinho')) || [];
+carrinho = carrinho.filter(item => PRODUTOS.some(p => p.id === item.id)); // ignora itens de produtos que nao existem mais
 let categoriaAtiva = 'cervejas'; // aba inicial; ao carregar vira a 1a aba visivel
 let termoBusca = '';
 
@@ -76,7 +77,8 @@ function aplicarRestricaoIdade() {
     // Esconde os botões das categorias alcoólicas
     document.querySelectorAll('.cat-btn[data-categoria]').forEach(btn => {
         const alcoolica = CATEGORIAS_ALCOOLICAS.includes(btn.dataset.categoria);
-        btn.style.display = (restrito && alcoolica) ? 'none' : '';
+        const semProdutos = !PRODUTOS.some(p => p.categoria === btn.dataset.categoria);
+        btn.style.display = ((restrito && alcoolica) || semProdutos) ? 'none' : '';
     });
 
     // Se estava numa aba bloqueada (alcoolica), vai para a primeira aba liberada
