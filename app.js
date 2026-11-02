@@ -187,12 +187,14 @@ function renderizarProdutos() {
     filtrados.sort((x, y) => posAba(x.categoria) - posAba(y.categoria));
 
     const TITULOS_SECAO = {
-        cervejas: 'Cervejas',
+        cervejas: 'Cervejas Lata',
+        longneck: 'Long Neck',
         energeticos: 'Energ&eacute;ticos',
-        combos: 'Combos',
-        destilados: 'Gin &amp; Destilados',
-        refrigerantes: 'Refrigerantes',
-        gelo: 'Gelo &amp; Cop&atilde;o'
+        refrigerantes: 'Refrigerantes e &Aacute;gua',
+        drinks: 'Drinks Prontos',
+        destilados: 'Destilados',
+        gelo: 'Gelo',
+        combos: 'Combos'
     };
     let ultimaCategoria = null;
 
@@ -214,11 +216,11 @@ function renderizarProdutos() {
         card.innerHTML = `
             <div class="product-image-container">
                 <img src="${produto.imagem}" alt="${produto.nome}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=500&auto=format&fit=crop&q=60'">
-                <span class="product-volume-tag">${produto.volume}</span>
+                ${produto.volume ? `<span class="product-volume-tag">${produto.volume}</span>` : ''}
             </div>
             <div class="product-info">
                 <h3 class="product-title">${produto.nome}</h3>
-                <p class="product-desc">${produto.descricao}</p>
+                ${produto.descricao ? `<p class="product-desc">${produto.descricao}</p>` : ''}
                 
                 <div class="product-footer">
                     <span class="product-price">R$ ${produto.preco.toFixed(2).replace('.', ',')}</span>
