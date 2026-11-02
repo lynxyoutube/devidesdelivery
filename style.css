@@ -743,6 +743,44 @@ h1, h2, h3, .brand-name, .drawer-title, .product-price, .mobile-cart-total {
 }
 
 /* ===================================================
+   BOTÃO FLUTUANTE DE WHATSAPP
+   =================================================== */
+.whatsapp-float {
+    position: fixed;
+    right: 16px;
+    bottom: 20px;
+    bottom: max(20px, env(safe-area-inset-bottom));
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--whatsapp-green);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(34, 197, 94, 0.45);
+    z-index: 45;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.15s;
+}
+
+.whatsapp-float:hover {
+    background: var(--whatsapp-hover);
+    transform: scale(1.06);
+}
+
+/* Quando a barra do carrinho (mobile) está visível, o botão sobe para não ficar por cima */
+.mobile-cart-bar[style*="flex"] ~ .whatsapp-float {
+    bottom: 88px;
+}
+
+@media (min-width: 768px) {
+    .mobile-cart-bar[style*="flex"] ~ .whatsapp-float {
+        bottom: 20px;
+    }
+}
+
+/* ===================================================
    RODAPÉ DA PÁGINA
    =================================================== */
 .site-footer {
