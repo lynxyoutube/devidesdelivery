@@ -9,6 +9,15 @@ let termoBusca = '';
 const whatsappNumero = CONFIG.whatsapp;
 const nomeLojaAtual = CONFIG.nomeLoja;
 
+// Verificação de idade (+18): 'maior', 'menor' ou null (ainda não respondeu)
+const CATEGORIAS_ALCOOLICAS = CONFIG.categoriasAlcoolicas || [];
+let respostaIdade = localStorage.getItem('devides_idade');
+
+function liberadoParaVenda(produto) {
+    // Quem não confirmou ser maior de 18 só vê o que não é alcoólico
+    return respostaIdade === 'maior' || !CATEGORIAS_ALCOOLICAS.includes(produto.categoria);
+}
+
 // ===================================================
 // INICIALIZAÇÃO
 // ===================================================
@@ -20,9 +29,111 @@ document.addEventListener('DOMContentLoaded', () => {
         zapFloat.href = `https://wa.me/${whatsappNumero.replace(/\D/g, '')}?text=${saudacao}`;
     }
 
+    // Primeira visita: pergunta a idade antes de mostrar a loja
+    if (respostaIdade === null) {
+        const gate = document.getElementById('age-gate');
+        if (gate) {
+            gate.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    aplicarRestricaoIdade();
+    carregarDadosCliente();
     renderizarProdutos();
     atualizarCarrinhoVisual();
 });
+
+// ===================================================
+// VERIFICAÇÃO DE IDADE (+18)
+// ===================================================
+function responderIdade(maiorDeIdade) {
+    respostaIdade = maiorDeIdade ? 'maior' : 'menor';
+    localStorage.setItem('devides_idade', respostaIdade);
+
+    document.getElementById('age-gate').style.display = 'none';
+    document.body.style.overflow = 'auto';
+
+    aplicarRestricaoIdade();
+    renderizarProdutos();
+    atualizarCarrinhoVisual();
+}
+
+function aplicarRestricaoIdade() {
+    const restrito = respostaIdade !== 'maior';
+
+    // Esconde os botões das categorias alcoólicas
+    document.querySelectorAll('.cat-btn[data-categoria]').forEach(btn => {
+        const alcoolica = CATEGORIAS_ALCOOLICAS.includes(btn.dataset.categoria);
+        btn.style.display = (restrito && alcoolica) ? 'none' : '';
+    });
+
+    // Se estava numa categoria bloqueada, volta para "Todas"
+    if (restrito && CATEGORIAS_ALCOOLICAS.includes(categoriaAtiva)) {
+        categoriaAtiva = 'todas';
+        document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+        const btnTodas = document.querySelector('.cat-btn');
+        if (btnTodas) btnTodas.classList.add('active');
+    }
+
+    // Tira do carrinho qualquer item alcoólico que tenha ficado salvo (só para quem se declarou menor)
+    if (respostaIdade === 'menor') {
+        const antes = carrinho.length;
+        carrinho = carrinho.filter(item => {
+            const produto = PRODUTOS.find(p => p.id === item.id);
+            return produto && liberadoParaVenda(produto);
+        });
+        if (carrinho.length !== antes) {
+            localStorage.setItem('adega_carrinho', JSON.stringify(carrinho));
+        }
+    }
+
+    // Ajusta o exemplo da busca para quem não pode ver as alcoólicas
+    const busca = document.getElementById('search-input');
+    if (busca) {
+        busca.placeholder = restrito
+            ? '🔍 Buscar bebida... (Baly 2L, Coca-Cola, Gelo...)'
+            : '🔍 Buscar bebida... (Baly 2L, Skol latão, Gin de 10, Gelo...)';
+    }
+}
+
+// ===================================================
+// DADOS DO CLIENTE (salvos neste aparelho para o próximo pedido)
+// ===================================================
+const CAMPOS_CLIENTE = {
+    nome: 'cliente-nome',
+    telefone: 'cliente-telefone',
+    rua: 'cliente-rua',
+    numero: 'cliente-numero',
+    bairro: 'cliente-bairro',
+    complemento: 'cliente-complemento'
+};
+
+function carregarDadosCliente() {
+    try {
+        const salvo = JSON.parse(localStorage.getItem('devides_cliente')) || {};
+        Object.entries(CAMPOS_CLIENTE).forEach(([chave, idCampo]) => {
+            const campo = document.getElementById(idCampo);
+            if (campo && salvo[chave]) campo.value = salvo[chave];
+        });
+    } catch (e) {
+        // dados salvos corrompidos: ignora e segue com os campos vazios
+    }
+}
+
+function salvarDadosCliente(incluirEndereco) {
+    try {
+        const salvo = JSON.parse(localStorage.getItem('devides_cliente')) || {};
+        Object.entries(CAMPOS_CLIENTE).forEach(([chave, idCampo]) => {
+            const ehEndereco = ['rua', 'numero', 'bairro', 'complemento'].includes(chave);
+            if (ehEndereco && !incluirEndereco) return;
+            salvo[chave] = document.getElementById(idCampo).value.trim();
+        });
+        localStorage.setItem('devides_cliente', JSON.stringify(salvo));
+    } catch (e) {
+        // sem espaço ou armazenamento bloqueado: o pedido segue normalmente
+    }
+}
 
 // ===================================================
 // RENDERIZAÇÃO DOS PRODUTOS
@@ -32,6 +143,7 @@ function renderizarProdutos() {
     container.innerHTML = '';
 
     const filtrados = PRODUTOS.filter(produto => {
+        if (!liberadoParaVenda(produto)) return false;
         const bateCategoria = categoriaAtiva === 'todas' || produto.categoria === categoriaAtiva;
         const bateBusca = produto.nome.toLowerCase().includes(termoBusca.toLowerCase()) || 
                           produto.descricao.toLowerCase().includes(termoBusca.toLowerCase());
@@ -111,7 +223,7 @@ function filtrarProdutos() {
 // ===================================================
 function adicionarAoCarrinho(idProduto) {
     const produto = PRODUTOS.find(p => p.id === idProduto);
-    if (!produto) return;
+    if (!produto || !liberadoParaVenda(produto)) return;
 
     const itemExistente = carrinho.find(item => item.id === idProduto);
     if (itemExistente) {
@@ -323,6 +435,9 @@ function enviarPedidoWhatsApp() {
     const formaPagamento = document.getElementById('forma-pagamento').value;
     const troco = document.getElementById('troco-para').value.trim();
     const obs = document.getElementById('cliente-obs').value.trim();
+
+    // Guarda nome, telefone e endereço neste aparelho para o próximo pedido
+    salvarDadosCliente(tipoEntrega === 'Entrega em Domicílio');
 
     const { subtotal, taxa, total } = calcularTotais();
 
