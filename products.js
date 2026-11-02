@@ -2,9 +2,9 @@
 const CONFIG = {
     nomeLoja: "Devides Delivery",
     slogan: "Pediu, chegou, gelou!",
-    // COLOQUE SEU NÚMERO DE WHATSAPP AQUI COM O SEU DDD (Ex: 55 + DDD + 996049894)
-    whatsapp: "5511996049894", 
-    taxaEntregaFixa: 0.00, // Deixe 0 se a taxa for calculada pelo endereço ou grátis
+    // WhatsApp da loja: 55 + DDD + número (+55 18 99604-9894)
+    whatsapp: "5518996049894", 
+    taxaEntregaFixa: 2.00, // Taxa fixa de entrega (não é cobrada na retirada no local)
     mensagemAviso: "Pediu, chegou, gelou! • Distribuidora de Bebidas • Delivery e Retirada"
 };
 
