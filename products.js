@@ -47,7 +47,7 @@ const PRODUTOS = [
     { id: 25, nome: "Heineken Zero (300ml)", categoria: "longneck", preco: 7.50, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "imagens/heineken-zero-longneck.jpg" },
     { id: 26, nome: "Amstel Ultra (275ml)", categoria: "longneck", preco: 7.50, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "imagens/amstel-ultra-longneck.jpg" },
     { id: 27, nome: "Spaten (330ml)", categoria: "longneck", preco: 7.79, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "imagens/spaten-longneck.jpg" },
-    { id: 28, nome: "Moinho Real", categoria: "longneck", preco: 3.50, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "logo.jpg" },
+    { id: 28, nome: "Moinho Real (330ml)", categoria: "longneck", preco: 3.50, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "imagens/moinho-real-longneck.jpg" },
 
     // --- ENERGETICOS ---
     { id: 6, nome: "Baly Melancia (473ml)", categoria: "energeticos", preco: 8.00, volume: "473ml", descricao: "Lata 473ml melancia gelada.", imagem: "imagens/baly-melancia-lata.jpg" },
