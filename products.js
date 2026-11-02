@@ -6,6 +6,8 @@ const CONFIG = {
     // WhatsApp da loja: 55 + DDD + número (+55 18 99604-9894)
     whatsapp: "5518998198935", // TESTE (voltar para 5518996049894 = numero original da loja) 
     taxaEntregaFixa: 2.00, // Taxa fixa de entrega (não é cobrada na retirada no local)
+    // Etiqueta verde pequena em cima da foto (mostra o campo volume do produto). true = mostrar
+    mostrarEtiquetaVolume: false,
     // Categorias com bebida alcoólica: ficam bloqueadas para quem disser que é menor de 18 anos
     categoriasAlcoolicas: ["cervejas", "longneck", "drinks", "combos", "destilados"],
     mensagemAviso: "Pediu, chegou, gelou! • Distribuidora de Bebidas • Delivery e Retirada"
