@@ -20,6 +20,17 @@ const PRODUTOS = [
     // Para adicionar um combo, copie o modelo abaixo, tire as barras // do inicio e preencha:
     // { id: 20, nome: "Combo Gin + Baly 2L", categoria: "combos", preco: 0.00, volume: "Combo", descricao: "O que vem no combo.", imagem: "imagens/combo-gin-baly.jpg" },
 
+    // --- CERVEJAS (aba "Cervejas") ---
+    {
+        id: 7,
+        nome: "Cerveja Conti Zero Grau Lata 269ml",
+        categoria: "cervejas",
+        preco: 2.50,
+        volume: "269ml",
+        descricao: "Lata 269ml zero grau gelada.",
+        imagem: "imagens/conti-zero-grau-lata.jpg"
+    },
+
     // --- ENERGETICOS ---
     {
         id: 6,
