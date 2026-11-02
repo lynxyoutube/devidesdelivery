@@ -44,7 +44,7 @@ const PRODUTOS = [
 
     // --- LONG NECK ---
     { id: 24, nome: "Heineken", categoria: "longneck", preco: 7.00, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "imagens/heineken-longneck.jpg" },
-    { id: 25, nome: "Heineken Zero", categoria: "longneck", preco: 7.50, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "logo.jpg" },
+    { id: 25, nome: "Heineken Zero", categoria: "longneck", preco: 7.50, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "imagens/heineken-zero-longneck.jpg" },
     { id: 26, nome: "Amstel Ultra", categoria: "longneck", preco: 7.50, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "logo.jpg" },
     { id: 27, nome: "Spaten", categoria: "longneck", preco: 7.79, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "logo.jpg" },
     { id: 28, nome: "Moinho Real", categoria: "longneck", preco: 3.50, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "logo.jpg" },
