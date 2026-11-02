@@ -105,5 +105,5 @@ const PRODUTOS = [
     // --- GELO ---
     { id: 72, nome: "Gelo 2,5kg", categoria: "gelo", preco: 8.50, volume: "2,5kg", descricao: "Pacote de gelo 2,5kg.", imagem: "logo.jpg" },
     { id: 73, nome: "Gelo 5kg", categoria: "gelo", preco: 15.00, volume: "5kg", descricao: "Pacote de gelo 5kg.", imagem: "logo.jpg" },
-    { id: 74, nome: "Gelo de Sabor", categoria: "gelo", preco: 4.00, volume: "Unidade", descricao: "Gelo de sabor (unidade).", imagem: "logo.jpg" }
+    { id: 74, nome: "Gelo de Sabor", categoria: "gelo", preco: 4.00, volume: "Unidade", descricao: "Gelo de sabor (unidade).", imagem: "logo.jpg", sabores: ["\u00c1gua de Coco", "Gelo Brisa", "Morango", "Maracuj\u00e1", "Ma\u00e7\u00e3 Verde", "Melancia"] }
 ];

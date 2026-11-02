@@ -2,7 +2,7 @@
 // ESTADO DA APLICAÇÃO
 // ===================================================
 let carrinho = JSON.parse(localStorage.getItem('adega_carrinho')) || [];
-carrinho = carrinho.filter(item => PRODUTOS.some(p => p.id === item.id)); // ignora itens de produtos que nao existem mais
+carrinho = carrinho.filter(item => PRODUTOS.some(p => p.id === item.id && !(p.sabores && !item.sabor))); // ignora itens de produtos que nao existem mais (ou que agora exigem sabor)
 let categoriaAtiva = 'cervejas'; // aba inicial; ao carregar vira a 1a aba visivel
 let termoBusca = '';
 
@@ -157,7 +157,8 @@ function renderizarProdutos() {
         // Pesquisando: procura em TODAS as abas. Sem pesquisa: so a aba escolhida.
         const bateCategoria = true; // cardapio em uma pagina so: todas as secoes aparecem, cada uma com seu titulo
         const bateBusca = produto.nome.toLowerCase().includes(termoBusca.toLowerCase()) || 
-                          produto.descricao.toLowerCase().includes(termoBusca.toLowerCase());
+                          produto.descricao.toLowerCase().includes(termoBusca.toLowerCase()) ||
+                          (produto.sabores || []).join(' ').toLowerCase().includes(termoBusca.toLowerCase());
         return bateCategoria && bateBusca;
     });
 
@@ -209,8 +210,19 @@ function renderizarProdutos() {
             container.appendChild(titulo);
         }
 
-        const itemNoCarrinho = carrinho.find(item => item.id === produto.id);
-        const quantidade = itemNoCarrinho ? itemNoCarrinho.qtd : 0;
+        const quantidade = carrinho.filter(item => item.id === produto.id).reduce((soma, item) => soma + item.qtd, 0);
+        let botaoHtml;
+        if (produto.sabores) {
+            botaoHtml = `<button class="add-btn" onclick="abrirSeletorSabor(${produto.id})">+ Escolher sabor${quantidade > 0 ? ' (' + quantidade + ')' : ''}</button>`;
+        } else if (quantidade === 0) {
+            botaoHtml = `<button class="add-btn" onclick="adicionarAoCarrinho(${produto.id})">+ Adicionar</button>`;
+        } else {
+            botaoHtml = `<div class="qty-control">
+                                <button class="qty-btn" onclick="alterarQuantidade(${produto.id}, -1)">-</button>
+                                <span class="qty-number">${quantidade}</span>
+                                <button class="qty-btn" onclick="alterarQuantidade(${produto.id}, 1)">+</button>
+                            </div>`;
+        }
 
         const card = document.createElement('div');
         card.className = 'product-card';
@@ -221,23 +233,13 @@ function renderizarProdutos() {
             </div>
             <div class="product-info">
                 <h3 class="product-title">${produto.nome}</h3>
-                ${produto.descricao ? `<p class="product-desc">${produto.descricao}</p>` : ''}
+                ${produto.descricao ? `<p class="product-desc">${produto.descricao}${produto.sabores ? ' Sabores: ' + produto.sabores.join(', ') + '.' : ''}</p>` : ''}
                 
                 <div class="product-footer">
                     <span class="product-price">R$ ${produto.preco.toFixed(2).replace('.', ',')}</span>
                     
                     <div id="btn-container-${produto.id}">
-                        ${quantidade === 0 ? `
-                            <button class="add-btn" onclick="adicionarAoCarrinho(${produto.id})">
-                                + Adicionar
-                            </button>
-                        ` : `
-                            <div class="qty-control">
-                                <button class="qty-btn" onclick="alterarQuantidade(${produto.id}, -1)">-</button>
-                                <span class="qty-number">${quantidade}</span>
-                                <button class="qty-btn" onclick="alterarQuantidade(${produto.id}, 1)">+</button>
-                            </div>
-                        `}
+                        ${botaoHtml}
                     </div>
                 </div>
             </div>
@@ -271,29 +273,42 @@ function filtrarProdutos() {
 // ===================================================
 // GERENCIAMENTO DO CARRINHO
 // ===================================================
-function adicionarAoCarrinho(idProduto) {
+function adicionarAoCarrinho(idProduto, sabor) {
     const produto = PRODUTOS.find(p => p.id === idProduto);
     if (!produto || !liberadoParaVenda(produto)) return;
 
-    const itemExistente = carrinho.find(item => item.id === idProduto);
+    // Produto com sabores: abre a escolha de sabor antes de adicionar
+    if (produto.sabores && !sabor) {
+        abrirSeletorSabor(idProduto);
+        return;
+    }
+
+    const itemExistente = carrinho.find(item => item.id === idProduto && (item.sabor || '') === (sabor || ''));
     if (itemExistente) {
         itemExistente.qtd += 1;
     } else {
-        carrinho.push({
+        const novo = {
             id: produto.id,
             nome: produto.nome,
             preco: produto.preco,
             volume: produto.volume,
             qtd: 1
-        });
+        };
+        if (sabor) novo.sabor = sabor;
+        carrinho.push(novo);
     }
 
     salvarEAtualizar();
 }
 
 function alterarQuantidade(idProduto, variacao) {
-    const index = carrinho.findIndex(item => item.id === idProduto);
-    if (index === -1) return;
+    const index = carrinho.findIndex(item => item.id === idProduto && !item.sabor);
+    alterarQuantidadeIndice(index, variacao);
+}
+
+// Altera a quantidade de uma linha do carrinho (cada sabor e uma linha separada)
+function alterarQuantidadeIndice(index, variacao) {
+    if (index < 0 || index >= carrinho.length) return;
 
     carrinho[index].qtd += variacao;
 
@@ -302,6 +317,90 @@ function alterarQuantidade(idProduto, variacao) {
     }
 
     salvarEAtualizar();
+    renderizarSeletorSabor(); // se a escolha de sabor estiver aberta, atualiza as quantidades
+}
+
+// ===================================================
+// ESCOLHA DE SABOR (produtos que tem a lista "sabores")
+// ===================================================
+let produtoSaborAberto = null;
+
+function abrirSeletorSabor(idProduto) {
+    const produto = PRODUTOS.find(p => p.id === idProduto);
+    if (!produto || !produto.sabores || !liberadoParaVenda(produto)) return;
+    produtoSaborAberto = idProduto;
+
+    let overlay = document.getElementById('sabor-modal');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'sabor-modal';
+        overlay.className = 'sabor-overlay';
+        overlay.addEventListener('click', event => {
+            if (event.target === overlay) fecharSeletorSabor();
+        });
+        document.body.appendChild(overlay);
+    }
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    renderizarSeletorSabor();
+}
+
+function fecharSeletorSabor() {
+    produtoSaborAberto = null;
+    const overlay = document.getElementById('sabor-modal');
+    if (overlay) overlay.classList.remove('open');
+    document.body.style.overflow = 'auto';
+}
+
+function renderizarSeletorSabor() {
+    if (produtoSaborAberto === null) return;
+    const overlay = document.getElementById('sabor-modal');
+    const produto = PRODUTOS.find(p => p.id === produtoSaborAberto);
+    if (!overlay || !produto) return;
+
+    const linhas = produto.sabores.map((sabor, i) => {
+        const item = carrinho.find(it => it.id === produto.id && it.sabor === sabor);
+        const qtd = item ? item.qtd : 0;
+        const controle = qtd === 0
+            ? `<button class="add-btn" onclick="alterarSabor(${i}, 1)">+ Adicionar</button>`
+            : `<div class="qty-control">
+                   <button class="qty-btn" onclick="alterarSabor(${i}, -1)">-</button>
+                   <span class="qty-number">${qtd}</span>
+                   <button class="qty-btn" onclick="alterarSabor(${i}, 1)">+</button>
+               </div>`;
+        return `<div class="sabor-linha"><span class="sabor-nome">${sabor}</span>${controle}</div>`;
+    }).join('');
+
+    const total = carrinho.filter(it => it.id === produto.id).reduce((soma, it) => soma + it.qtd, 0);
+    const textoPronto = total > 0 ? `Pronto (${total} ${total === 1 ? 'item' : 'itens'})` : 'Fechar';
+
+    overlay.innerHTML = `
+        <div class="sabor-sheet" role="dialog" aria-modal="true" aria-label="Escolha o sabor">
+            <div class="sabor-topo">
+                <div>
+                    <h3 class="sabor-titulo">${produto.nome}</h3>
+                    <p class="sabor-sub">Escolha o sabor &middot; R$ ${produto.preco.toFixed(2).replace('.', ',')} cada</p>
+                </div>
+                <button class="close-btn" onclick="fecharSeletorSabor()" aria-label="Fechar">&times;</button>
+            </div>
+            <div class="sabor-lista">${linhas}</div>
+            <button class="sabor-pronto" onclick="fecharSeletorSabor()">${textoPronto}</button>
+        </div>
+    `;
+}
+
+function alterarSabor(indiceSabor, variacao) {
+    const produto = PRODUTOS.find(p => p.id === produtoSaborAberto);
+    if (!produto) return;
+    const sabor = produto.sabores[indiceSabor];
+
+    if (variacao > 0) {
+        adicionarAoCarrinho(produto.id, sabor);
+        renderizarSeletorSabor();
+    } else {
+        const index = carrinho.findIndex(it => it.id === produto.id && it.sabor === sabor);
+        alterarQuantidadeIndice(index, variacao);
+    }
 }
 
 function salvarEAtualizar() {
@@ -367,19 +466,19 @@ function atualizarCarrinhoVisual() {
         btnFinalizar.disabled = false;
 
         let html = '';
-        carrinho.forEach(item => {
+        carrinho.forEach((item, idx) => {
             const itemTotal = item.preco * item.qtd;
             html += `
                 <div class="cart-item">
                     <div style="flex: 1; padding-right: 8px;">
-                        <div class="cart-item-name">${item.nome}</div>
+                        <div class="cart-item-name">${item.nome}${item.sabor ? ' - ' + item.sabor : ''}</div>
                         <div class="cart-item-sub">R$ ${item.preco.toFixed(2).replace('.', ',')} un. (${item.volume})</div>
                     </div>
                     <div class="cart-item-actions">
                         <div class="qty-control">
-                            <button class="qty-btn" onclick="alterarQuantidade(${item.id}, -1)">-</button>
+                            <button class="qty-btn" onclick="alterarQuantidadeIndice(${idx}, -1)">-</button>
                             <span class="qty-number">${item.qtd}</span>
-                            <button class="qty-btn" onclick="alterarQuantidade(${item.id}, 1)">+</button>
+                            <button class="qty-btn" onclick="alterarQuantidadeIndice(${idx}, 1)">+</button>
                         </div>
                         <span class="cart-item-price">R$ ${itemTotal.toFixed(2).replace('.', ',')}</span>
                     </div>
@@ -510,7 +609,7 @@ function enviarPedidoWhatsApp() {
 
     carrinho.forEach(item => {
         const itemTotal = (item.preco * item.qtd).toFixed(2).replace('.', ',');
-        mensagem += `▪️ ${item.qtd}x ${item.nome} (${item.volume}) - R$ ${itemTotal}\n`;
+        mensagem += `▪️ ${item.qtd}x ${item.nome}${item.sabor ? ' - ' + item.sabor : ''} (${item.volume}) - R$ ${itemTotal}\n`;
     });
 
     mensagem += `─────────────────────────\n`;
