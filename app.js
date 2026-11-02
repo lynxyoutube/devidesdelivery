@@ -155,13 +155,13 @@ function renderizarProdutos() {
     const filtrados = PRODUTOS.filter(produto => {
         if (!liberadoParaVenda(produto)) return false;
         // Pesquisando: procura em TODAS as abas. Sem pesquisa: so a aba escolhida.
-        const bateCategoria = termoBusca !== '' || categoriaAtiva === 'todas' || produto.categoria === categoriaAtiva;
+        const bateCategoria = true; // cardapio em uma pagina so: todas as secoes aparecem, cada uma com seu titulo
         const bateBusca = produto.nome.toLowerCase().includes(termoBusca.toLowerCase()) || 
                           produto.descricao.toLowerCase().includes(termoBusca.toLowerCase());
         return bateCategoria && bateBusca;
     });
 
-    if (filtrados.length === 0 && termoBusca === '' && categoriaAtiva === 'combos') {
+    if (filtrados.length === 0 && termoBusca === '' && false) {
         container.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6b7280;">
                 <p style="font-size: 1.1rem; font-weight: 500;">Combos em breve!</p>
@@ -181,7 +181,31 @@ function renderizarProdutos() {
         return;
     }
 
+    // Ordena pelas secoes na mesma ordem dos botoes das abas
+    const ordemAbas = Array.from(document.querySelectorAll('.cat-btn[data-categoria]')).map(b => b.dataset.categoria);
+    const posAba = c => (ordemAbas.indexOf(c) === -1 ? 99 : ordemAbas.indexOf(c));
+    filtrados.sort((x, y) => posAba(x.categoria) - posAba(y.categoria));
+
+    const TITULOS_SECAO = {
+        cervejas: 'Cervejas',
+        energeticos: 'Energ&eacute;ticos',
+        combos: 'Combos',
+        destilados: 'Gin &amp; Destilados',
+        refrigerantes: 'Refrigerantes',
+        gelo: 'Gelo &amp; Cop&atilde;o'
+    };
+    let ultimaCategoria = null;
+
     filtrados.forEach(produto => {
+        if (produto.categoria !== ultimaCategoria) {
+            ultimaCategoria = produto.categoria;
+            const titulo = document.createElement('h2');
+            titulo.className = 'section-title';
+            titulo.id = 'secao-' + produto.categoria;
+            titulo.innerHTML = TITULOS_SECAO[produto.categoria] || produto.categoria;
+            container.appendChild(titulo);
+        }
+
         const itemNoCarrinho = carrinho.find(item => item.id === produto.id);
         const quantidade = itemNoCarrinho ? itemNoCarrinho.qtd : 0;
 
@@ -231,7 +255,9 @@ function selecionarCategoria(categoria, btnElement) {
         btnElement.classList.add('active');
     }
 
-    renderizarProdutos();
+    // Cardapio em uma pagina so: a aba leva ate a secao
+    const alvo = document.getElementById('secao-' + categoria);
+    if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function filtrarProdutos() {

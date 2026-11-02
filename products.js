@@ -40,5 +40,14 @@ const PRODUTOS = [
         volume: "473ml",
         descricao: "Lata 473ml melancia gelada.",
         imagem: "imagens/baly-melancia-lata.jpg"
+    },
+    {
+        id: 8,
+        nome: "Energ\u00e9tico Baly Lata 473ml (Ma\u00e7\u00e3 Verde)",
+        categoria: "energeticos",
+        preco: 8.00,
+        volume: "473ml",
+        descricao: "Lata 473ml ma\u00e7\u00e3 verde gelada.",
+        imagem: "imagens/baly-maca-verde-lata.jpg"
     }
 ];
