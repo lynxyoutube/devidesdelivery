@@ -2,7 +2,7 @@
 // ESTADO DA APLICAÇÃO
 // ===================================================
 let carrinho = JSON.parse(localStorage.getItem('adega_carrinho')) || [];
-let categoriaAtiva = 'todas';
+let categoriaAtiva = 'cervejas'; // aba inicial; ao carregar vira a 1a aba visivel
 let termoBusca = '';
 
 // Número e nome da loja vêm sempre do products.js
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     aplicarRestricaoIdade();
+    irParaPrimeiraAba();
     carregarDadosCliente();
     renderizarProdutos();
     atualizarCarrinhoVisual();
@@ -55,8 +56,18 @@ function responderIdade(maiorDeIdade) {
     document.body.style.overflow = 'auto';
 
     aplicarRestricaoIdade();
+    irParaPrimeiraAba();
     renderizarProdutos();
     atualizarCarrinhoVisual();
+}
+
+// Seleciona a primeira aba visivel (para menores de 18 pula as abas alcoolicas)
+function irParaPrimeiraAba() {
+    const primeira = Array.from(document.querySelectorAll('.cat-btn')).find(btn => btn.style.display !== 'none');
+    if (!primeira) return;
+    categoriaAtiva = primeira.dataset.categoria || 'todas';
+    document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+    primeira.classList.add('active');
 }
 
 function aplicarRestricaoIdade() {
@@ -68,12 +79,9 @@ function aplicarRestricaoIdade() {
         btn.style.display = (restrito && alcoolica) ? 'none' : '';
     });
 
-    // Se estava numa categoria bloqueada, volta para "Todas"
+    // Se estava numa aba bloqueada (alcoolica), vai para a primeira aba liberada
     if (restrito && CATEGORIAS_ALCOOLICAS.includes(categoriaAtiva)) {
-        categoriaAtiva = 'todas';
-        document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-        const btnTodas = document.querySelector('.cat-btn');
-        if (btnTodas) btnTodas.classList.add('active');
+        irParaPrimeiraAba();
     }
 
     // Tira do carrinho qualquer item alcoólico que tenha ficado salvo (só para quem se declarou menor)
@@ -144,11 +152,22 @@ function renderizarProdutos() {
 
     const filtrados = PRODUTOS.filter(produto => {
         if (!liberadoParaVenda(produto)) return false;
-        const bateCategoria = categoriaAtiva === 'todas' || produto.categoria === categoriaAtiva;
+        // Pesquisando: procura em TODAS as abas. Sem pesquisa: so a aba escolhida.
+        const bateCategoria = termoBusca !== '' || categoriaAtiva === 'todas' || produto.categoria === categoriaAtiva;
         const bateBusca = produto.nome.toLowerCase().includes(termoBusca.toLowerCase()) || 
                           produto.descricao.toLowerCase().includes(termoBusca.toLowerCase());
         return bateCategoria && bateBusca;
     });
+
+    if (filtrados.length === 0 && termoBusca === '' && categoriaAtiva === 'combos') {
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6b7280;">
+                <p style="font-size: 1.1rem; font-weight: 500;">Combos em breve!</p>
+                <p style="font-size: 0.9rem; margin-top: 6px;">Estamos preparando ofertas especiais pra voc&ecirc;.</p>
+            </div>
+        `;
+        return;
+    }
 
     if (filtrados.length === 0) {
         container.innerHTML = `

@@ -13,7 +13,7 @@
     <meta property="og:description" content="Bebidas geladas com delivery e retirada. Peça direto pelo WhatsApp.">
     <link rel="icon" type="image/jpeg" href="logo.jpg">
     <link rel="apple-touch-icon" href="logo.jpg">
-    <link rel="stylesheet" href="style.css?v=202611020417">
+    <link rel="stylesheet" href="style.css?v=202611020429">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -68,12 +68,12 @@
             </div>
 
             <nav class="categories-nav">
-                <button class="cat-btn active" onclick="selecionarCategoria('todas', this)">Todas as Bebidas</button>
-                <button class="cat-btn" onclick="selecionarCategoria('energeticos', this)">⚡ Baly (Energéticos)</button>
-                <button class="cat-btn" data-categoria="cervejas" onclick="selecionarCategoria('cervejas', this)">🍺 Cervejas (Skol...)</button>
+                <button class="cat-btn active" data-categoria="cervejas" onclick="selecionarCategoria('cervejas', this)">🍺 Cervejas (Skol...)</button>
+                <button class="cat-btn" data-categoria="combos" onclick="selecionarCategoria('combos', this)">🎁 Combos</button>
+                <button class="cat-btn" data-categoria="energeticos" onclick="selecionarCategoria('energeticos', this)">⚡ Baly (Energéticos)</button>
                 <button class="cat-btn" data-categoria="destilados" onclick="selecionarCategoria('destilados', this)">🍸 Gin & Destilados</button>
-                <button class="cat-btn" onclick="selecionarCategoria('refrigerantes', this)">🥤 Refrigerantes</button>
-                <button class="cat-btn" onclick="selecionarCategoria('gelo', this)">🧊 Gelo & Copão</button>
+                <button class="cat-btn" data-categoria="refrigerantes" onclick="selecionarCategoria('refrigerantes', this)">🥤 Refrigerantes</button>
+                <button class="cat-btn" data-categoria="gelo" onclick="selecionarCategoria('gelo', this)">🧊 Gelo & Copão</button>
             </nav>
         </section>
 
@@ -218,7 +218,7 @@
     </footer>
 
     <!-- SCRIPTS -->
-    <script src="products.js?v=202611020417"></script>
-    <script src="app.js?v=202611020417"></script>
+    <script src="products.js?v=202611020429"></script>
+    <script src="app.js?v=202611020429"></script>
 </body>
 </html>

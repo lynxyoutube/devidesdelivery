@@ -7,7 +7,7 @@ const CONFIG = {
     whatsapp: "5518998198935", // TESTE (voltar para 5518996049894 = numero original da loja) 
     taxaEntregaFixa: 2.00, // Taxa fixa de entrega (não é cobrada na retirada no local)
     // Categorias com bebida alcoólica: ficam bloqueadas para quem disser que é menor de 18 anos
-    categoriasAlcoolicas: ["cervejas", "destilados"],
+    categoriasAlcoolicas: ["cervejas", "combos", "destilados"],
     mensagemAviso: "Pediu, chegou, gelou! • Distribuidora de Bebidas • Delivery e Retirada"
 };
 
@@ -16,6 +16,10 @@ const CONFIG = {
 // As fotos abaixo são apenas de demonstração (Unsplash). Troque pelas fotos reais dos seus produtos
 // colocando o arquivo na pasta do site e usando o nome dele, ex: imagem: "baly-tradicional.jpg"
 const PRODUTOS = [
+    // --- COMBOS (aba "Combos") ---
+    // Para adicionar um combo, copie o modelo abaixo, tire as barras // do inicio e preencha:
+    // { id: 20, nome: "Combo Gin + Baly 2L", categoria: "combos", preco: 0.00, volume: "Combo", descricao: "O que vem no combo.", imagem: "imagens/combo-gin-baly.jpg" },
+
     // --- ENERGÉTICOS ---
     {
         id: 1,
