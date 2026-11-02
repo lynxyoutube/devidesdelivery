@@ -5,18 +5,20 @@ let carrinho = JSON.parse(localStorage.getItem('adega_carrinho')) || [];
 let categoriaAtiva = 'todas';
 let termoBusca = '';
 
-// Se houver número salvo no navegador, usa ele, senão usa o padrão do products.js
-let whatsappNumero = localStorage.getItem('adega_whatsapp') || CONFIG.whatsapp;
-let nomeLojaAtual = localStorage.getItem('adega_nome') || CONFIG.nomeLoja;
+// Número e nome da loja vêm sempre do products.js
+const whatsappNumero = CONFIG.whatsapp;
+const nomeLojaAtual = CONFIG.nomeLoja;
 
 // ===================================================
 // INICIALIZAÇÃO
 // ===================================================
 document.addEventListener('DOMContentLoaded', () => {
-    const elLoja = document.getElementById('loja-nome');
-    if (elLoja) elLoja.innerText = nomeLojaAtual;
-    const footerLoja = document.getElementById('footer-loja-nome');
-    if (footerLoja) footerLoja.innerText = nomeLojaAtual;
+    // Botão flutuante de WhatsApp (conversa direta com a loja)
+    const zapFloat = document.getElementById('whatsapp-float');
+    if (zapFloat) {
+        const saudacao = encodeURIComponent(`Olá! Vim pelo site da ${nomeLojaAtual} e gostaria de fazer um pedido.`);
+        zapFloat.href = `https://wa.me/${whatsappNumero.replace(/\D/g, '')}?text=${saudacao}`;
+    }
 
     renderizarProdutos();
     atualizarCarrinhoVisual();
@@ -146,6 +148,11 @@ function salvarEAtualizar() {
     renderizarProdutos();
 }
 
+function tipoEntregaAtual() {
+    const marcado = document.querySelector('input[name="tipoEntrega"]:checked');
+    return marcado ? marcado.value : 'Entrega em Domicílio';
+}
+
 function calcularTotais() {
     let subtotal = 0;
     let totalItens = 0;
@@ -155,14 +162,15 @@ function calcularTotais() {
         totalItens += item.qtd;
     });
 
-    const taxa = CONFIG.taxaEntregaFixa || 0;
+    // A taxa só é cobrada na entrega em domicílio (retirada no local é grátis)
+    const taxa = tipoEntregaAtual() === 'Entrega em Domicílio' ? (CONFIG.taxaEntregaFixa || 0) : 0;
     const total = subtotal + taxa;
 
     return { subtotal, taxa, total, totalItens };
 }
 
 function atualizarCarrinhoVisual() {
-    const { subtotal, total, totalItens } = calcularTotais();
+    const { subtotal, taxa, total, totalItens } = calcularTotais();
 
     // Contadores
     document.getElementById('cart-counter').innerText = totalItens;
@@ -186,8 +194,8 @@ function atualizarCarrinhoVisual() {
         container.innerHTML = `
             <div class="cart-empty">
                 <p style="font-size: 2.2rem; margin-bottom: 8px;">🛒</p>
-                <p style="font-weight: 600; color: #374151;">Seu carrinho está vazio</p>
-                <p style="font-size: 0.85rem; margin-top: 4px;">Adicione energéticos, cervejas e bebidas para pedir!</p>
+                <p style="font-weight: 600; color: #ffffff;">Seu carrinho está vazio</p>
+                <p style="font-size: 0.85rem; margin-top: 4px; color: var(--text-secondary);">Adicione energéticos, cervejas e bebidas para pedir!</p>
             </div>
         `;
         formSection.style.display = 'none';
@@ -221,6 +229,7 @@ function atualizarCarrinhoVisual() {
 
     // Totais no rodapé do drawer
     document.getElementById('resumo-subtotal').innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+    document.getElementById('resumo-taxa').innerText = taxa > 0 ? `R$ ${taxa.toFixed(2).replace('.', ',')}` : 'Grátis';
     document.getElementById('resumo-total').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
 }
 
@@ -244,13 +253,15 @@ function fecharCarrinhoSeClicarFora(event) {
 }
 
 function toggleTipoEntrega() {
-    const tipo = document.querySelector('input[name="tipoEntrega"]:checked').value;
+    const tipo = tipoEntregaAtual();
     const enderecoCampos = document.getElementById('endereco-campos');
     if (tipo === 'Retirada no Local') {
         enderecoCampos.style.display = 'none';
     } else {
         enderecoCampos.style.display = 'block';
     }
+    // Recalcula os totais (taxa só na entrega)
+    atualizarCarrinhoVisual();
 }
 
 function toggleTroco() {
@@ -313,7 +324,7 @@ function enviarPedidoWhatsApp() {
     const troco = document.getElementById('troco-para').value.trim();
     const obs = document.getElementById('cliente-obs').value.trim();
 
-    const { total } = calcularTotais();
+    const { subtotal, taxa, total } = calcularTotais();
 
     // FORMATAR MENSAGEM DO WHATSAPP
     let mensagem = `*NOVO PEDIDO - ${nomeLojaAtual.toUpperCase()}*\n`;
@@ -338,6 +349,8 @@ function enviarPedidoWhatsApp() {
     });
 
     mensagem += `─────────────────────────\n`;
+    mensagem += `*SUBTOTAL:* R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
+    if (taxa > 0) mensagem += `*TAXA DE ENTREGA:* R$ ${taxa.toFixed(2).replace('.', ',')}\n`;
     mensagem += `*TOTAL DO PEDIDO:* R$ ${total.toFixed(2).replace('.', ',')}\n`;
     mensagem += `*PAGAMENTO:* ${formaPagamento}\n`;
 
@@ -350,26 +363,13 @@ function enviarPedidoWhatsApp() {
     }
 
     mensagem += `─────────────────────────\n`;
-    mensagem += `_Pedido gerado pelo site da adega._`;
+    mensagem += `_Pedido feito pelo site ${nomeLojaAtual}._`;
 
     // Codifica a mensagem para a URL
     const mensagemEncoded = encodeURIComponent(mensagem);
 
-    // Formata o número de WhatsApp (remove qualquer caractere não numérico)
-    let numeroZapLimpo = (whatsappNumero || CONFIG.whatsapp).replace(/\D/g, '');
-
-    // Se o número ainda estiver com o padrão de exemplo, avisa o dono do comércio
-    if (numeroZapLimpo === '5511999999999' || !numeroZapLimpo) {
-        const novoZap = prompt('Atenção: Configure o seu número de WhatsApp com DDD para receber os pedidos (Ex: 5511988887777):', '55');
-        if (novoZap && novoZap.trim().length >= 10) {
-            numeroZapLimpo = novoZap.replace(/\D/g, '');
-            localStorage.setItem('adega_whatsapp', numeroZapLimpo);
-            whatsappNumero = numeroZapLimpo;
-        } else {
-            alert('Você precisa configurar seu número de WhatsApp para receber os pedidos!');
-            return;
-        }
-    }
+    // Formata o número de WhatsApp da loja (somente dígitos)
+    const numeroZapLimpo = whatsappNumero.replace(/\D/g, '');
 
     const urlZap = `https://api.whatsapp.com/send?phone=${numeroZapLimpo}&text=${mensagemEncoded}`;
 
@@ -377,21 +377,3 @@ function enviarPedidoWhatsApp() {
     window.open(urlZap, '_blank');
 }
 
-// ===================================================
-// CONFIGURAÇÃO RÁPIDA (PARA O DONO DO COMÉRCIO)
-// ===================================================
-function alterarNumeroZap() {
-    const zapAtual = localStorage.getItem('adega_whatsapp') || CONFIG.whatsapp;
-
-    const novoZap = prompt('Digite o seu número de WhatsApp com 55 e DDD (Apenas números):\nSeu número na arte é 99604-9894.\nExemplo com DDD 11: 5511996049894\nExemplo com DDD 19: 5519996049894', zapAtual);
-    if (novoZap && novoZap.trim()) {
-        const limpo = novoZap.replace(/\D/g, '');
-        if (limpo.length >= 10) {
-            localStorage.setItem('adega_whatsapp', limpo);
-            whatsappNumero = limpo;
-            alert(`WhatsApp atualizado com sucesso para: ${limpo}`);
-        } else {
-            alert('Número inválido. Lembre de colocar com 55 e o DDD da sua região.');
-        }
-    }
-}
