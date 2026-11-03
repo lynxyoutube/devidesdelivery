@@ -3,12 +3,27 @@
 // ===================================================
 let carrinho = JSON.parse(localStorage.getItem('adega_carrinho')) || [];
 carrinho = carrinho.filter(item => PRODUTOS.some(p => p.id === item.id && !(p.sabores && !item.sabor))); // ignora itens de produtos que nao existem mais (ou que agora exigem sabor)
-let categoriaAtiva = 'cervejas'; // aba inicial; ao carregar vira a 1a aba visivel
+let grupoAtivo = null; // null = pagina inicial; senao o id de uma categoria principal (CONFIG.grupos)
+let subAtiva = null;   // null = todas; senao uma categoria original dentro do grupo (ex.: "longneck")
 let termoBusca = '';
 
 // Número e nome da loja vêm sempre do products.js
 const whatsappNumero = CONFIG.whatsapp;
 const nomeLojaAtual = CONFIG.nomeLoja;
+
+// Categorias principais da vitrine e titulos das categorias originais (subsecoes)
+const GRUPOS = CONFIG.grupos || [];
+const TITULOS_SECAO = {
+    garrafinhas: 'Garrafinhas',
+    cervejas: 'Cervejas Lata',
+    longneck: 'Long Neck',
+    destilados: 'Destilados',
+    drinks: 'Drinks Prontos',
+    energeticos: 'Energ&eacute;ticos',
+    refrigerantes: 'Refrigerantes e &Aacute;gua',
+    gelo: 'Gelo',
+    combos: 'Combos'
+};
 
 // Verificação de idade (+18): 'maior', 'menor' ou null (ainda não respondeu)
 const CATEGORIAS_ALCOOLICAS = CONFIG.categoriasAlcoolicas || [];
@@ -39,9 +54,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Botao "voltar" do celular: sai da categoria e volta para a pagina inicial
+    try { history.replaceState({ grupo: null, sub: null }, ''); } catch (e) {}
+    window.addEventListener('popstate', event => {
+        const estado = event.state || {};
+        grupoAtivo = estado.grupo || null;
+        subAtiva = estado.sub || null;
+        renderizarNavegacao();
+        renderizarProdutos();
+    });
+
     aplicarRestricaoIdade();
-    irParaPrimeiraAba();
     carregarDadosCliente();
+    renderizarNavegacao();
     renderizarProdutos();
     atualizarCarrinhoVisual();
 });
@@ -56,34 +81,22 @@ function responderIdade(maiorDeIdade) {
     document.getElementById('age-gate').style.display = 'none';
     document.body.style.overflow = 'auto';
 
+    grupoAtivo = null;
+    subAtiva = null;
     aplicarRestricaoIdade();
-    irParaPrimeiraAba();
+    renderizarNavegacao();
     renderizarProdutos();
     atualizarCarrinhoVisual();
-}
-
-// Seleciona a primeira aba visivel (para menores de 18 pula as abas alcoolicas)
-function irParaPrimeiraAba() {
-    const primeira = Array.from(document.querySelectorAll('.cat-btn')).find(btn => btn.style.display !== 'none');
-    if (!primeira) return;
-    categoriaAtiva = primeira.dataset.categoria || 'todas';
-    document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-    primeira.classList.add('active');
 }
 
 function aplicarRestricaoIdade() {
     const restrito = respostaIdade !== 'maior';
 
-    // Esconde os botões das categorias alcoólicas
-    document.querySelectorAll('.cat-btn[data-categoria]').forEach(btn => {
-        const alcoolica = CATEGORIAS_ALCOOLICAS.includes(btn.dataset.categoria);
-        const semProdutos = !PRODUTOS.some(p => p.categoria === btn.dataset.categoria);
-        btn.style.display = ((restrito && alcoolica) || semProdutos) ? 'none' : '';
-    });
-
-    // Se estava numa aba bloqueada (alcoolica), vai para a primeira aba liberada
-    if (restrito && CATEGORIAS_ALCOOLICAS.includes(categoriaAtiva)) {
-        irParaPrimeiraAba();
+    // Se estava numa categoria bloqueada (alcoolica), volta para a pagina inicial
+    const grupo = GRUPOS.find(g => g.id === grupoAtivo);
+    if (grupo && !grupoVisivel(grupo)) {
+        grupoAtivo = null;
+        subAtiva = null;
     }
 
     // Tira do carrinho qualquer item alcoólico que tenha ficado salvo (só para quem se declarou menor)
@@ -102,8 +115,8 @@ function aplicarRestricaoIdade() {
     const busca = document.getElementById('search-input');
     if (busca) {
         busca.placeholder = restrito
-            ? '🔍 Buscar bebida... (Baly 2L, Coca-Cola, Gelo...)'
-            : '🔍 Buscar bebida... (Baly 2L, Skol latão, Gin de 10, Gelo...)';
+            ? 'Buscar: Baly, Coca-Cola, Gelo...'
+            : 'Buscar: Baly, Skol, Heineken...';
     }
 }
 
@@ -146,128 +159,252 @@ function salvarDadosCliente(incluirEndereco) {
 }
 
 // ===================================================
-// RENDERIZAÇÃO DOS PRODUTOS
+// CATEGORIAS, NAVEGAÇÃO E BUSCA
 // ===================================================
-function renderizarProdutos() {
-    const container = document.getElementById('produtos-container');
-    container.innerHTML = '';
-
-    const filtrados = PRODUTOS.filter(produto => {
-        if (!liberadoParaVenda(produto)) return false;
-        // Pesquisando: procura em TODAS as abas. Sem pesquisa: so a aba escolhida.
-        const bateCategoria = true; // cardapio em uma pagina so: todas as secoes aparecem, cada uma com seu titulo
-        const bateBusca = produto.nome.toLowerCase().includes(termoBusca.toLowerCase()) || 
-                          produto.descricao.toLowerCase().includes(termoBusca.toLowerCase()) ||
-                          (produto.sabores || []).join(' ').toLowerCase().includes(termoBusca.toLowerCase());
-        return bateCategoria && bateBusca;
-    });
-
-    if (filtrados.length === 0 && termoBusca === '' && false) {
-        container.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6b7280;">
-                <p style="font-size: 1.1rem; font-weight: 500;">Combos em breve!</p>
-                <p style="font-size: 0.9rem; margin-top: 6px;">Estamos preparando ofertas especiais pra voc&ecirc;.</p>
-            </div>
-        `;
-        return;
-    }
-
-    if (filtrados.length === 0) {
-        container.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6b7280;">
-                <p style="font-size: 1.1rem; font-weight: 500;">Nenhuma bebida encontrada.</p>
-                <p style="font-size: 0.9rem; margin-top: 6px;">Tente pesquisar por outro nome ou mudar a categoria.</p>
-            </div>
-        `;
-        return;
-    }
-
-    // Ordena pelas secoes na mesma ordem dos botoes das abas
-    const ordemAbas = Array.from(document.querySelectorAll('.cat-btn[data-categoria]')).map(b => b.dataset.categoria);
-    const posAba = c => (ordemAbas.indexOf(c) === -1 ? 99 : ordemAbas.indexOf(c));
-    filtrados.sort((x, y) => posAba(x.categoria) - posAba(y.categoria));
-
-    const TITULOS_SECAO = {
-        cervejas: 'Cervejas Lata',
-        garrafinhas: 'Garrafinhas',
-        longneck: 'Long Neck',
-        energeticos: 'Energ&eacute;ticos',
-        refrigerantes: 'Refrigerantes e &Aacute;gua',
-        drinks: 'Drinks Prontos',
-        destilados: 'Destilados',
-        gelo: 'Gelo',
-        combos: 'Combos'
-    };
-    let ultimaCategoria = null;
-
-    filtrados.forEach(produto => {
-        if (produto.categoria !== ultimaCategoria) {
-            ultimaCategoria = produto.categoria;
-            const titulo = document.createElement('h2');
-            titulo.className = 'section-title';
-            titulo.id = 'secao-' + produto.categoria;
-            titulo.innerHTML = TITULOS_SECAO[produto.categoria] || produto.categoria;
-            container.appendChild(titulo);
-        }
-
-        const quantidade = carrinho.filter(item => item.id === produto.id).reduce((soma, item) => soma + item.qtd, 0);
-        let botaoHtml;
-        if (produto.sabores) {
-            botaoHtml = `<button class="add-btn" onclick="abrirSeletorSabor(${produto.id})">+ Escolher sabor${quantidade > 0 ? ' (' + quantidade + ')' : ''}</button>`;
-        } else if (quantidade === 0) {
-            botaoHtml = `<button class="add-btn" onclick="adicionarAoCarrinho(${produto.id})">+ Adicionar</button>`;
-        } else {
-            botaoHtml = `<div class="qty-control">
-                                <button class="qty-btn" onclick="alterarQuantidade(${produto.id}, -1)">-</button>
-                                <span class="qty-number">${quantidade}</span>
-                                <button class="qty-btn" onclick="alterarQuantidade(${produto.id}, 1)">+</button>
-                            </div>`;
-        }
-
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.innerHTML = `
-            <div class="product-image-container">
-                <img src="${produto.imagem}" alt="${produto.nome}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='logo.jpg'">
-                ${(CONFIG.mostrarEtiquetaVolume && produto.volume) ? `<span class="product-volume-tag">${produto.volume}</span>` : ''}
-            </div>
-            <div class="product-info">
-                <h3 class="product-title">${produto.nome}</h3>
-                ${produto.descricao ? `<p class="product-desc">${produto.descricao}${produto.sabores ? ' Sabores: ' + produto.sabores.join(', ') + '.' : ''}</p>` : ''}
-                
-                <div class="product-footer">
-                    <span class="product-price">R$ ${produto.preco.toFixed(2).replace('.', ',')}</span>
-                    
-                    <div id="btn-container-${produto.id}">
-                        ${botaoHtml}
-                    </div>
-                </div>
-            </div>
-        `;
-        container.appendChild(card);
-    });
+function produtosDaCategoria(categoria) {
+    return PRODUTOS.filter(p => p.categoria === categoria && liberadoParaVenda(p));
 }
 
-// ===================================================
-// FILTROS E BUSCA
-// ===================================================
-function selecionarCategoria(categoria, btnElement) {
-    categoriaAtiva = categoria;
-    
-    // Atualiza classes ativas nos botões
-    document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-    if (btnElement) {
-        btnElement.classList.add('active');
-    }
+function produtosDoGrupo(grupo) {
+    return PRODUTOS.filter(p => grupo.categorias.includes(p.categoria) && liberadoParaVenda(p));
+}
 
-    // Cardapio em uma pagina so: a aba leva ate a secao
-    const alvo = document.getElementById('secao-' + categoria);
-    if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// Menores de 18 nao veem categorias principais que sao so de bebida alcoolica
+function grupoVisivel(grupo) {
+    if (respostaIdade === 'maior') return true;
+    return !grupo.categorias.every(c => CATEGORIAS_ALCOOLICAS.includes(c));
+}
+
+function gruposVisiveis() {
+    return GRUPOS.filter(g => grupoVisivel(g) && (g.mostrarVazio || produtosDoGrupo(g).length > 0));
+}
+
+// Busca sem diferenciar maiusculas e acentos ("agua" encontra "Água")
+function normalizar(texto) {
+    return String(texto || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function escaparHtml(texto) {
+    return String(texto).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function formatarPreco(valor) {
+    return 'R$ ' + valor.toFixed(2).replace('.', ',');
+}
+
+function irParaTopo() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+function limparBusca() {
+    const campo = document.getElementById('search-input');
+    if (campo) campo.value = '';
+    termoBusca = '';
+}
+
+function selecionarCategoria(idGrupo) {
+    limparBusca();
+    try { history[grupoAtivo ? 'replaceState' : 'pushState']({ grupo: idGrupo, sub: null }, ''); } catch (e) {}
+    grupoAtivo = idGrupo;
+    subAtiva = null;
+    renderizarNavegacao();
+    renderizarProdutos();
+    irParaTopo();
+}
+
+function selecionarSub(categoria) {
+    subAtiva = categoria;
+    try { history.replaceState({ grupo: grupoAtivo, sub: categoria }, ''); } catch (e) {}
+    renderizarNavegacao();
+    renderizarProdutos();
+}
+
+function voltarInicio() {
+    limparBusca();
+    if (grupoAtivo) {
+        try { history.pushState({ grupo: null, sub: null }, ''); } catch (e) {}
+    }
+    grupoAtivo = null;
+    subAtiva = null;
+    renderizarNavegacao();
+    renderizarProdutos();
+    irParaTopo();
+    return false; // usado pelo link da logo (nao recarrega a pagina)
 }
 
 function filtrarProdutos() {
     termoBusca = document.getElementById('search-input').value.trim();
     renderizarProdutos();
+}
+
+// Chips fixos no topo (so dentro de uma categoria): categorias principais + subcategorias
+function renderizarNavegacao() {
+    const nav = document.getElementById('nav-categorias');
+    const conteudo = document.getElementById('loja-conteudo');
+    document.body.classList.toggle('vista-categoria', !!grupoAtivo);
+
+    if (!grupoAtivo) {
+        nav.innerHTML = '';
+        nav.hidden = true;
+    } else {
+        let html = '<div class="chips-row"><button type="button" class="cat-btn" onclick="voltarInicio()">&larr; In&iacute;cio</button>';
+        html += gruposVisiveis().map(g =>
+            `<button type="button" class="cat-btn${g.id === grupoAtivo ? ' active' : ''}" onclick="selecionarCategoria('${g.id}')">${g.emoji} ${g.nome}</button>`
+        ).join('');
+        html += '</div>';
+
+        const grupo = GRUPOS.find(g => g.id === grupoAtivo);
+        const subs = grupo ? grupo.categorias.filter(c => produtosDaCategoria(c).length > 0) : [];
+        if (subs.length > 1) {
+            html += `<div class="chips-row"><button type="button" class="sub-btn${subAtiva ? '' : ' active'}" onclick="selecionarSub(null)">Todos</button>`;
+            html += subs.map(c =>
+                `<button type="button" class="sub-btn${subAtiva === c ? ' active' : ''}" onclick="selecionarSub('${c}')">${TITULOS_SECAO[c] || c}</button>`
+            ).join('');
+            html += '</div>';
+        }
+
+        nav.innerHTML = html;
+        nav.hidden = false;
+        const ativo = nav.querySelector('.cat-btn.active');
+        if (ativo && ativo.scrollIntoView) ativo.scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
+
+    // pequena animacao ao trocar de tela
+    conteudo.classList.remove('entrando');
+    void conteudo.offsetWidth;
+    conteudo.classList.add('entrando');
+}
+
+// ===================================================
+// RENDERIZAÇÃO DOS PRODUTOS
+// ===================================================
+function htmlBotaoProduto(produto) {
+    const quantidade = carrinho.filter(item => item.id === produto.id).reduce((soma, item) => soma + item.qtd, 0);
+    if (produto.sabores) {
+        return `<button class="add-btn" onclick="abrirSeletorSabor(${produto.id})">+ Escolher sabor${quantidade > 0 ? ' (' + quantidade + ')' : ''}</button>`;
+    }
+    if (quantidade === 0) {
+        return `<button class="add-btn" onclick="adicionarAoCarrinho(${produto.id})">+ Adicionar</button>`;
+    }
+    return `<div class="qty-control">
+                <button class="qty-btn" onclick="alterarQuantidade(${produto.id}, -1)" aria-label="Diminuir">-</button>
+                <span class="qty-number">${quantidade}</span>
+                <button class="qty-btn" onclick="alterarQuantidade(${produto.id}, 1)" aria-label="Aumentar">+</button>
+            </div>`;
+}
+
+function htmlCard(produto) {
+    const semFoto = !produto.imagem || produto.imagem === 'logo.jpg';
+    // Mostra o volume so quando o nome ainda nao traz essa informacao (ex.: "Long Neck")
+    const mostraVolume = produto.volume && !normalizar(produto.nome).includes(normalizar(produto.volume));
+    return `
+        <article class="product-card">
+            <div class="product-image-container${semFoto ? ' no-photo' : ''}">
+                <img src="${produto.imagem || 'logo.jpg'}" alt="${produto.nome}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='logo.jpg';this.parentNode.classList.add('no-photo')">
+                ${(CONFIG.mostrarEtiquetaVolume && produto.volume) ? `<span class="product-volume-tag">${produto.volume}</span>` : ''}
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">${produto.nome}</h3>
+                <span class="product-volume">${mostraVolume ? produto.volume : ''}</span>
+                <span class="product-price">${formatarPreco(produto.preco)}</span>
+                <div class="product-actions">${htmlBotaoProduto(produto)}</div>
+            </div>
+        </article>`;
+}
+
+function htmlGrade(lista) {
+    return `<div class="products-grid">${lista.map(htmlCard).join('')}</div>`;
+}
+
+function htmlTopoSecao(titulo, contagem) {
+    return `<div class="secao-topo"><h2 class="secao-titulo">${titulo}</h2>${contagem ? `<span class="secao-contagem">${contagem}</span>` : ''}</div>`;
+}
+
+function textoContagem(n) {
+    return `${n} ${n === 1 ? 'produto' : 'produtos'}`;
+}
+
+function htmlVazio(titulo, texto) {
+    return `<div class="loja-vazio"><strong>${titulo}</strong>${texto}</div>`;
+}
+
+// Pagina inicial: categorias, destaques e ofertas
+function htmlInicio() {
+    const tiles = gruposVisiveis().map(g => {
+        const vazio = produtosDoGrupo(g).length === 0;
+        const foto = g.imagem ? `<img src="${g.imagem}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : '';
+        return `
+            <button type="button" class="cat-tile" onclick="selecionarCategoria('${g.id}')">
+                ${vazio ? '<span class="cat-tile-soon">Em breve</span>' : ''}
+                <span class="cat-tile-media"><span class="cat-tile-emoji" aria-hidden="true">${g.emoji}</span>${foto}</span>
+                <span class="cat-tile-name">${g.nome}</span>
+            </button>`;
+    }).join('');
+
+    let html = `<section class="loja-secao">${htmlTopoSecao('Categorias')}<div class="cat-grid">${tiles}</div></section>`;
+
+    // Sem dados de vendas: os destaques sao os produtos escolhidos em CONFIG.destaques
+    const destaques = (CONFIG.destaques || []).map(id => PRODUTOS.find(p => p.id === id)).filter(p => p && liberadoParaVenda(p));
+    if (destaques.length > 0) {
+        html += `<section class="loja-secao">${htmlTopoSecao('Destaques')}${htmlGrade(destaques)}</section>`;
+    }
+
+    // Ofertas: aparece so quando existem combos cadastrados
+    const ofertas = produtosDaCategoria('combos');
+    if (ofertas.length > 0) {
+        html += `<section class="loja-secao">${htmlTopoSecao('Ofertas e combos')}${htmlGrade(ofertas)}</section>`;
+    }
+    return html;
+}
+
+// Dentro de uma categoria principal (com as subcategorias originais como secoes)
+function htmlCategoria() {
+    const grupo = GRUPOS.find(g => g.id === grupoAtivo);
+    if (!grupo) return htmlInicio();
+
+    const categorias = grupo.categorias.filter(c => (!subAtiva || c === subAtiva) && produtosDaCategoria(c).length > 0);
+    const total = categorias.reduce((soma, c) => soma + produtosDaCategoria(c).length, 0);
+    let html = `<section class="loja-secao" style="margin-top:20px">${htmlTopoSecao(`${grupo.emoji} ${grupo.nome}`, total ? textoContagem(total) : '')}`;
+
+    if (total === 0) {
+        html += htmlVazio(`${grupo.nome} em breve!`, 'Estamos preparando ofertas especiais pra voc&ecirc;.');
+    } else {
+        const comTitulos = categorias.length > 1;
+        html += '<div class="products-grid">';
+        categorias.forEach(c => {
+            if (comTitulos) html += `<h3 class="section-title">${TITULOS_SECAO[c] || c}</h3>`;
+            html += produtosDaCategoria(c).map(htmlCard).join('');
+        });
+        html += '</div>';
+    }
+    return html + '</section>';
+}
+
+// Resultado da pesquisa: procura em TODAS as categorias
+function htmlBusca() {
+    const termo = normalizar(termoBusca);
+    const filtrados = PRODUTOS.filter(produto => liberadoParaVenda(produto) &&
+        normalizar(`${produto.nome} ${produto.descricao || ''} ${(produto.sabores || []).join(' ')}`).includes(termo));
+
+    const topo = htmlTopoSecao(`Resultados para &ldquo;${escaparHtml(termoBusca)}&rdquo;`, textoContagem(filtrados.length));
+    if (filtrados.length === 0) {
+        return `<section class="loja-secao" style="margin-top:20px">${topo}${htmlVazio('Nenhuma bebida encontrada.', 'Tente pesquisar por outro nome.')}</section>`;
+    }
+    return `<section class="loja-secao" style="margin-top:20px">${topo}${htmlGrade(filtrados)}</section>`;
+}
+
+function renderizarProdutos() {
+    const nav = document.getElementById('nav-categorias');
+    if (nav) nav.hidden = !grupoAtivo || !!termoBusca;
+
+    const container = document.getElementById('loja-conteudo');
+    if (termoBusca) {
+        container.innerHTML = htmlBusca();
+    } else if (grupoAtivo) {
+        container.innerHTML = htmlCategoria();
+    } else {
+        container.innerHTML = htmlInicio();
+    }
 }
 
 // ===================================================
@@ -434,7 +571,9 @@ function atualizarCarrinhoVisual() {
     const { subtotal, taxa, total, totalItens } = calcularTotais();
 
     // Contadores
-    document.getElementById('cart-counter').innerText = totalItens;
+    const contador = document.getElementById('cart-counter');
+    contador.innerText = totalItens;
+    contador.classList.toggle('vazio', totalItens === 0);
 
     // Barra mobile
     const mobileBar = document.getElementById('mobile-cart-bar');

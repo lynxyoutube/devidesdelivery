@@ -10,6 +10,19 @@ const CONFIG = {
     mostrarEtiquetaVolume: false,
     // Categorias com bebida alcoólica: ficam bloqueadas para quem disser que é menor de 18 anos
     categoriasAlcoolicas: ["cervejas", "garrafinhas", "longneck", "drinks", "combos", "destilados"],
+    // Categorias principais da vitrine (as 6 que aparecem na pagina inicial).
+    // "categorias" = categorias originais dos produtos que ficam dentro dela (os produtos NAO mudam de categoria).
+    // "imagem" = foto da categoria (opcional). Sem foto, aparece o emoji. Ex.: imagem: "imagens/categorias/gelo.jpg"
+    grupos: [
+        { id: "cervejas",    nome: "Cervejas",   emoji: "\uD83C\uDF7A", categorias: ["garrafinhas", "cervejas", "longneck"], imagem: "imagens/skol-lata.jpg" },
+        { id: "destilados",  nome: "Destilados", emoji: "\uD83E\uDD43", categorias: ["destilados", "drinks"] },
+        { id: "energeticos", nome: "Energ\u00e9ticos", emoji: "\u26A1", categorias: ["energeticos"], imagem: "imagens/baly-tradicional-lata-2.jpg" },
+        { id: "semalcool",   nome: "Sem \u00e1lcool", emoji: "\uD83E\uDD64", categorias: ["refrigerantes"] },
+        { id: "gelo",        nome: "Gelo",       emoji: "\uD83E\uDDCA", categorias: ["gelo"] },
+        { id: "combos",      nome: "Combos",     emoji: "\uD83C\uDF81", categorias: ["combos"], mostrarVazio: true }
+    ],
+    // Produtos em destaque na pagina inicial (ids do catalogo abaixo). Troque os numeros para mudar os destaques.
+    destaques: [29, 14, 24, 37, 30, 19],
     mensagemAviso: "Pediu, chegou, gelou! • Distribuidora de Bebidas • Delivery e Retirada"
 };
 
