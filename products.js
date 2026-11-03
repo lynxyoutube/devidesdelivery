@@ -52,7 +52,7 @@ const PRODUTOS = [
     // --- ENERGETICOS ---
     { id: 6, nome: "Baly Melancia (473ml)", categoria: "energeticos", preco: 8.00, volume: "473ml", descricao: "Lata 473ml melancia gelada.", imagem: "imagens/baly-melancia-lata.jpg" },
     { id: 8, nome: "Baly Ma\u00e7\u00e3 Verde (473ml)", categoria: "energeticos", preco: 8.00, volume: "473ml", descricao: "Lata 473ml ma\u00e7\u00e3 verde gelada.", imagem: "imagens/baly-maca-verde-lata.jpg" },
-    { id: 29, nome: "Baly Tradicional (473ml)", categoria: "energeticos", preco: 8.00, volume: "473ml", descricao: "Lata 473ml gelada.", imagem: "logo.jpg" },
+    { id: 29, nome: "Baly Tradicional (473ml)", categoria: "energeticos", preco: 8.00, volume: "473ml", descricao: "Lata 473ml gelada.", imagem: "imagens/baly-tradicional-lata.jpg" },
     { id: 30, nome: "Baly Morango e P\u00eassego (473ml)", categoria: "energeticos", preco: 8.00, volume: "473ml", descricao: "Lata 473ml gelada.", imagem: "logo.jpg" },
     { id: 31, nome: "Baly Coco e A\u00e7a\u00ed (473ml)", categoria: "energeticos", preco: 8.00, volume: "473ml", descricao: "Lata 473ml gelada.", imagem: "logo.jpg" },
     { id: 32, nome: "Baly Frutas Tropicais (473ml)", categoria: "energeticos", preco: 8.00, volume: "473ml", descricao: "Lata 473ml gelada.", imagem: "logo.jpg" },
