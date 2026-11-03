@@ -59,7 +59,7 @@ const PRODUTOS = [
     { id: 33, nome: "Baly Tradicional Sem A\u00e7\u00facar (473ml)", categoria: "energeticos", preco: 8.00, volume: "473ml", descricao: "Lata 473ml gelada.", imagem: "logo.jpg" },
     { id: 34, nome: "Baly Melancia 2L", categoria: "energeticos", preco: 12.00, volume: "2L", descricao: "Energ\u00e9tico 2L gelado.", imagem: "imagens/baly-melancia-2l.jpg" },
     { id: 35, nome: "Baly Ma\u00e7\u00e3 Verde 2L", categoria: "energeticos", preco: 12.00, volume: "2L", descricao: "Energ\u00e9tico 2L gelado.", imagem: "imagens/baly-maca-verde-2l.jpg" },
-    { id: 36, nome: "Baly Morango e P\u00eassego 2L", categoria: "energeticos", preco: 12.00, volume: "2L", descricao: "Energ\u00e9tico 2L gelado.", imagem: "logo.jpg" },
+    { id: 36, nome: "Baly Morango e P\u00eassego 2L", categoria: "energeticos", preco: 12.00, volume: "2L", descricao: "Energ\u00e9tico 2L gelado.", imagem: "imagens/baly-morango-pessego-2l.jpg" },
     { id: 37, nome: "Baly Tradicional 2L", categoria: "energeticos", preco: 12.00, volume: "2L", descricao: "Energ\u00e9tico 2L gelado.", imagem: "logo.jpg" },
     { id: 38, nome: "Baly Uva Verde 2L", categoria: "energeticos", preco: 13.00, volume: "2L", descricao: "Energ\u00e9tico 2L gelado.", imagem: "logo.jpg" },
 
