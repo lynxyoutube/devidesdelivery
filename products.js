@@ -61,7 +61,7 @@ const PRODUTOS = [
     { id: 35, nome: "Baly Ma\u00e7\u00e3 Verde 2L", categoria: "energeticos", preco: 12.00, volume: "2L", descricao: "Energ\u00e9tico 2L gelado.", imagem: "imagens/baly-maca-verde-2l.jpg" },
     { id: 36, nome: "Baly Morango e P\u00eassego 2L", categoria: "energeticos", preco: 12.00, volume: "2L", descricao: "Energ\u00e9tico 2L gelado.", imagem: "imagens/baly-morango-pessego-2l.jpg" },
     { id: 37, nome: "Baly Tradicional 2L", categoria: "energeticos", preco: 12.00, volume: "2L", descricao: "Energ\u00e9tico 2L gelado.", imagem: "imagens/baly-tradicional-2l.jpg" },
-    { id: 38, nome: "Baly Uva Verde 2L", categoria: "energeticos", preco: 13.00, volume: "2L", descricao: "Energ\u00e9tico 2L gelado.", imagem: "logo.jpg" },
+    { id: 38, nome: "Baly Uva Verde 2L", categoria: "energeticos", preco: 13.00, volume: "2L", descricao: "Energ\u00e9tico 2L gelado.", imagem: "imagens/baly-uva-verde-2l.jpg" },
 
     // --- REFRIGERANTES E AGUA ---
     { id: 39, nome: "Coca-Cola 2L", categoria: "refrigerantes", preco: 14.00, volume: "2L", descricao: "Refrigerante 2L gelado.", imagem: "logo.jpg" },
