@@ -14,9 +14,9 @@ const CONFIG = {
     // "categorias" = categorias originais dos produtos que ficam dentro dela (os produtos NAO mudam de categoria).
     // "imagem" = foto da categoria (opcional). Sem foto, aparece o emoji. Ex.: imagem: "imagens/categorias/gelo.jpg"
     grupos: [
-        { id: "cervejas",    nome: "Cervejas",   emoji: "\uD83C\uDF7A", categorias: ["garrafinhas", "cervejas", "longneck"], imagem: "imagens/skol-lata.jpg" },
-        { id: "destilados",  nome: "Destilados", emoji: "\uD83E\uDD43", categorias: ["destilados", "drinks"] },
-        { id: "energeticos", nome: "Energ\u00e9ticos", emoji: "\u26A1", categorias: ["energeticos"], imagem: "imagens/baly-tradicional-lata-2.jpg" },
+        { id: "cervejas",    nome: "Cervejas",   emoji: "\uD83C\uDF7A", categorias: ["garrafinhas", "cervejas", "longneck"], imagem: "imagens/categorias/cervejas.jpg" },
+        { id: "destilados",  nome: "Destilados", emoji: "\uD83E\uDD43", categorias: ["destilados", "drinks"], imagem: "imagens/categorias/destilados.jpg" },
+        { id: "energeticos", nome: "Energ\u00e9ticos", emoji: "\u26A1", categorias: ["energeticos"], imagem: "imagens/categorias/energeticos.jpg" },
         { id: "semalcool",   nome: "Sem \u00e1lcool", emoji: "\uD83E\uDD64", categorias: ["refrigerantes"] },
         { id: "gelo",        nome: "Gelo",       emoji: "\uD83E\uDDCA", categorias: ["gelo"] },
         { id: "combos",      nome: "Combos",     emoji: "\uD83C\uDF81", categorias: ["combos"], mostrarVazio: true }
