@@ -18,7 +18,7 @@ const CONFIG = {
         { id: "destilados",  nome: "Destilados", emoji: "\uD83E\uDD43", categorias: ["destilados", "drinks"], imagem: "imagens/categorias/destilados.jpg" },
         { id: "energeticos", nome: "Energ\u00e9ticos", emoji: "\u26A1", categorias: ["energeticos"], imagem: "imagens/categorias/energeticos.jpg" },
         { id: "semalcool",   nome: "Sem \u00e1lcool", emoji: "\uD83E\uDD64", categorias: ["refrigerantes"], imagem: "imagens/categorias/semalcool.jpg" },
-        { id: "gelo",        nome: "Gelo",       emoji: "\uD83E\uDDCA", categorias: ["gelo"] },
+        { id: "gelo",        nome: "Gelo",       emoji: "\uD83E\uDDCA", categorias: ["gelo"], imagem: "imagens/categorias/gelo.jpg" },
         { id: "combos",      nome: "Combos",     emoji: "\uD83C\uDF81", categorias: ["combos"], mostrarVazio: true }
     ],
     // Produtos em destaque na pagina inicial (ids do catalogo abaixo). Troque os numeros para mudar os destaques.
