@@ -1413,3 +1413,44 @@ body.vista-categoria .hero {
     width: auto;
     accent-color: var(--accent);
 }
+
+/* --- CATEGORIAS: sem espaco vazio, qualquer quantidade de categorias fica centralizada/preenchida --- */
+.cat-grid {
+    --cat-gap: 12px;
+    --cat-cols: 3;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--cat-gap);
+}
+
+.cat-tile {
+    flex: 0 0 calc((100% - (var(--cat-cols) - 1) * var(--cat-gap)) / var(--cat-cols));
+    max-width: calc((100% - (var(--cat-cols) - 1) * var(--cat-gap)) / var(--cat-cols));
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+@media (min-width: 900px) {
+    .cat-grid {
+        --cat-gap: 14px;
+        flex-wrap: nowrap;
+    }
+
+    .cat-tile {
+        flex: 1 1 0;
+        max-width: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .cat-grid {
+        --cat-gap: 8px;
+    }
+}
+
+@media (max-width: 340px) {
+    .cat-grid {
+        --cat-cols: 2;
+    }
+}
