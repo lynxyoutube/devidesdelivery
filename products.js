@@ -107,7 +107,7 @@ const PRODUTOS = [
     // --- DESTILADOS ---
     { id: 63, nome: "Cacha\u00e7a 51", categoria: "destilados", preco: 18.00, volume: "", descricao: "Cacha\u00e7a.", imagem: "imagens/cachaca-51.jpg" },
     { id: 64, nome: "Cacha\u00e7a Velho Barreiro", categoria: "destilados", preco: 18.00, volume: "", descricao: "Cacha\u00e7a.", imagem: "imagens/cachaca-velho-barreiro.jpg" },
-    { id: 65, nome: "Cacha\u00e7a Jamel", categoria: "destilados", preco: 18.00, volume: "", descricao: "Cacha\u00e7a.", imagem: "logo.jpg" },
+    { id: 65, nome: "Cacha\u00e7a Jamel", categoria: "destilados", preco: 18.00, volume: "", descricao: "Cacha\u00e7a.", imagem: "imagens/cachaca-jamel.jpg" },
     { id: 66, nome: "Askov Maracuj\u00e1 (900ml)", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "logo.jpg" },
     { id: 67, nome: "Askov Kiwi (900ml)", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "logo.jpg" },
     { id: 68, nome: "Askov Frutas Vermelhas (900ml)", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "logo.jpg" },
