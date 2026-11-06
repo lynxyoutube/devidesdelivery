@@ -114,7 +114,7 @@ const PRODUTOS = [
     { id: 69, nome: "Askov Lim\u00e3o (900ml)", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/askov-limao-900ml.jpg" },
     { id: 70, nome: "Conhaque Presidente (900ml)", categoria: "destilados", preco: 25.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/conhaque-presidente-900ml.jpg" },
     { id: 71, nome: "Campari", categoria: "destilados", preco: 70.00, volume: "", descricao: "Garrafa.", imagem: "imagens/campari.jpg" },
-    { id: 75, nome: "Gin Invictus Strawberry (900ml)", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "logo.jpg" },
+    { id: 75, nome: "Gin Invictus Strawberry (900ml)", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/gin-invictus-strawberry-900ml.jpg" },
     { id: 76, nome: "Gin Invictus Melancia (900ml)", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "logo.jpg" },
     { id: 77, nome: "Gin Invictus Tropical (900ml)", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "logo.jpg" },
 
