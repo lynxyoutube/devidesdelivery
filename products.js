@@ -82,14 +82,14 @@ const PRODUTOS = [
     { id: 80, nome: "Red Bull Tradicional (250ml)", categoria: "redbull", preco: 12.00, volume: "250ml", descricao: "Lata 250ml gelada.", imagem: "imagens/redbull-tradicional-lata.jpg" },
 
     // --- REFRIGERANTES E AGUA ---
-    { id: 39, nome: "Coca-Cola 2L", categoria: "refrigerantes", preco: 14.00, volume: "2L", descricao: "Refrigerante 2L gelado.", imagem: "logo.jpg" },
-    { id: 40, nome: "Coca-Cola 2L Retorn\u00e1vel", categoria: "refrigerantes", preco: 10.00, volume: "2L", descricao: "Garrafa retorn\u00e1vel 2L.", imagem: "logo.jpg" },
-    { id: 41, nome: "Guaran\u00e1 Bol", categoria: "refrigerantes", preco: 7.00, volume: "", descricao: "Refrigerante gelado.", imagem: "logo.jpg" },
-    { id: 42, nome: "Fanta Lata (350ml)", categoria: "refrigerantes", preco: 4.00, volume: "Lata", descricao: "Refrigerante lata gelado.", imagem: "logo.jpg" },
-    { id: 43, nome: "H2O (500ml)", categoria: "refrigerantes", preco: 6.50, volume: "500ml", descricao: "H2O gelado.", imagem: "logo.jpg" },
-    { id: 44, nome: "H2O 1,5L", categoria: "refrigerantes", preco: 12.00, volume: "1,5L", descricao: "H2O gelado.", imagem: "logo.jpg" },
-    { id: 45, nome: "\u00c1gua", categoria: "refrigerantes", preco: 2.00, volume: "", descricao: "\u00c1gua gelada.", imagem: "logo.jpg" },
-    { id: 46, nome: "\u00c1gua com G\u00e1s", categoria: "refrigerantes", preco: 3.00, volume: "", descricao: "\u00c1gua com g\u00e1s gelada.", imagem: "logo.jpg" },
+    { id: 39, nome: "Coca-Cola 2L", categoria: "refrigerantes", preco: 14.00, volume: "2L", descricao: "Refrigerante 2L gelado.", imagem: "imagens/coca-cola-2l.jpg" },
+    { id: 40, nome: "Coca-Cola 2L Retorn\u00e1vel", categoria: "refrigerantes", preco: 10.00, volume: "2L", descricao: "Garrafa retorn\u00e1vel 2L.", imagem: "imagens/coca-cola-2l-retornavel.jpg" },
+    { id: 41, nome: "Guaran\u00e1 Bol", categoria: "refrigerantes", preco: 7.00, volume: "", descricao: "Refrigerante gelado.", imagem: "imagens/guarana-bol-2l.jpg" },
+    { id: 42, nome: "Fanta Lata (350ml)", categoria: "refrigerantes", preco: 4.00, volume: "Lata", descricao: "Refrigerante lata gelado.", imagem: "imagens/fanta-lata-350ml.jpg" },
+    { id: 43, nome: "H2O (500ml)", categoria: "refrigerantes", preco: 6.50, volume: "500ml", descricao: "H2O gelado.", imagem: "imagens/h2o-500ml.jpg" },
+    { id: 44, nome: "H2O 1,5L", categoria: "refrigerantes", preco: 12.00, volume: "1,5L", descricao: "H2O gelado.", imagem: "imagens/h2o-1-5l.jpg" },
+    // [REMOVIDO POR ENQUANTO - tire as // para voltar] { id: 45, nome: "\u00c1gua", categoria: "refrigerantes", preco: 2.00, volume: "", descricao: "\u00c1gua gelada.", imagem: "logo.jpg" },
+    { id: 46, nome: "\u00c1gua com G\u00e1s", categoria: "refrigerantes", preco: 3.00, volume: "", descricao: "\u00c1gua com g\u00e1s gelada.", imagem: "imagens/agua-com-gas.jpg" },
 
     // --- DRINKS PRONTOS (Corote, Drinkball, Ice...) ---
     { id: 47, nome: "Corote Velho Barreiro (500ml)", categoria: "drinks", preco: 5.00, volume: "", descricao: "Drink pronto gelado.", imagem: "imagens/corote-velho-barreiro-500ml.jpg" },
@@ -124,7 +124,7 @@ const PRODUTOS = [
     { id: 77, nome: "Gin Invictus Tropical (900ml)", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/gin-invictus-tropical-900ml.jpg" },
 
     // --- GELO ---
-    { id: 72, nome: "Gelo 2,5kg", categoria: "gelo", preco: 8.50, volume: "2,5kg", descricao: "Pacote de gelo 2,5kg.", imagem: "logo.jpg" },
-    { id: 73, nome: "Gelo 5kg", categoria: "gelo", preco: 15.00, volume: "5kg", descricao: "Pacote de gelo 5kg.", imagem: "logo.jpg" },
-    { id: 74, nome: "Gelo de Sabor", categoria: "gelo", preco: 4.00, volume: "Unidade", descricao: "Gelo de sabor (unidade).", imagem: "logo.jpg", sabores: ["\u00c1gua de Coco", "Gelo Brisa", "Morango", "Maracuj\u00e1", "Ma\u00e7\u00e3 Verde", "Melancia"] }
+    { id: 72, nome: "Gelo 2,5kg", categoria: "gelo", preco: 8.50, volume: "2,5kg", descricao: "Pacote de gelo 2,5kg.", imagem: "imagens/gelo-2-5kg.jpg" },
+    { id: 73, nome: "Gelo 5kg", categoria: "gelo", preco: 15.00, volume: "5kg", descricao: "Pacote de gelo 5kg.", imagem: "imagens/gelo-5kg.jpg" },
+    { id: 74, nome: "Gelo de Sabor", categoria: "gelo", preco: 4.00, volume: "Unidade", descricao: "Gelo de sabor (unidade).", imagem: "imagens/gelo-de-sabor.jpg", sabores: ["\u00c1gua de Coco", "Gelo Brisa", "Morango", "Maracuj\u00e1", "Ma\u00e7\u00e3 Verde", "Melancia"] }
 ];
