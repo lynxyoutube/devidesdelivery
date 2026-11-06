@@ -110,7 +110,7 @@ const PRODUTOS = [
     { id: 65, nome: "Cacha\u00e7a Jamel", categoria: "destilados", preco: 18.00, volume: "", descricao: "Cacha\u00e7a.", imagem: "imagens/cachaca-jamel.jpg" },
     { id: 66, nome: "Askov Maracuj\u00e1 (900ml)", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/askov-maracuja-900ml.jpg" },
     { id: 67, nome: "Askov Kiwi (900ml)", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/askov-kiwi-900ml.jpg" },
-    { id: 68, nome: "Askov Frutas Vermelhas (900ml)", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "logo.jpg" },
+    { id: 68, nome: "Askov Frutas Vermelhas (900ml)", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/askov-frutas-vermelhas-900ml.jpg" },
     { id: 69, nome: "Askov Lim\u00e3o (900ml)", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "logo.jpg" },
     { id: 70, nome: "Conhaque Presidente (900ml)", categoria: "destilados", preco: 25.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "logo.jpg" },
     { id: 71, nome: "Campari", categoria: "destilados", preco: 70.00, volume: "", descricao: "Garrafa.", imagem: "logo.jpg" },
