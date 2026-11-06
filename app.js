@@ -20,6 +20,9 @@ const TITULOS_SECAO = {
     destilados: 'Destilados',
     drinks: 'Drinks Prontos',
     energeticos: 'Energ&eacute;ticos',
+    baly: 'Baly',
+    monster: 'Monster',
+    redbull: 'Red Bull',
     refrigerantes: 'Refrigerantes e &Aacute;gua',
     gelo: 'Gelo',
     combos: 'Combos'
