@@ -113,7 +113,7 @@ const PRODUTOS = [
     { id: 68, nome: "Askov Frutas Vermelhas (900ml)", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/askov-frutas-vermelhas-900ml.jpg" },
     { id: 69, nome: "Askov Lim\u00e3o (900ml)", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/askov-limao-900ml.jpg" },
     { id: 70, nome: "Conhaque Presidente (900ml)", categoria: "destilados", preco: 25.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/conhaque-presidente-900ml.jpg" },
-    { id: 71, nome: "Campari", categoria: "destilados", preco: 70.00, volume: "", descricao: "Garrafa.", imagem: "logo.jpg" },
+    { id: 71, nome: "Campari", categoria: "destilados", preco: 70.00, volume: "", descricao: "Garrafa.", imagem: "imagens/campari.jpg" },
 
     // --- GELO ---
     { id: 72, nome: "Gelo 2,5kg", categoria: "gelo", preco: 8.50, volume: "2,5kg", descricao: "Pacote de gelo 2,5kg.", imagem: "logo.jpg" },
