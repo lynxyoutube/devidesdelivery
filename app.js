@@ -280,6 +280,7 @@ function renderizarNavegacao() {
 // ===================================================
 function htmlBotaoProduto(produto) {
     const quantidade = carrinho.filter(item => item.id === produto.id).reduce((soma, item) => soma + item.qtd, 0);
+    if (produto.precoPendente) return '<button type="button" class="add-btn" disabled>Em breve</button>';
     if (produto.sabores) {
         return `<button class="add-btn" onclick="abrirSeletorSabor(${produto.id})">+ Escolher sabor${quantidade > 0 ? ' (' + quantidade + ')' : ''}</button>`;
     }
@@ -306,7 +307,7 @@ function htmlCard(produto) {
             <div class="product-info">
                 <h3 class="product-title">${produto.nome}</h3>
                 <span class="product-volume">${mostraVolume ? produto.volume : ''}</span>
-                <span class="product-price">${formatarPreco(produto.preco)}</span>
+                <span class="product-price${produto.precoPendente ? ' pendente' : ''}">${produto.precoPendente ? 'Pre&ccedil;o em breve' : formatarPreco(produto.preco)}</span>
                 <div class="product-actions">${htmlBotaoProduto(produto)}</div>
             </div>
         </article>`;
@@ -412,7 +413,7 @@ function renderizarProdutos() {
 // ===================================================
 function adicionarAoCarrinho(idProduto, sabor) {
     const produto = PRODUTOS.find(p => p.id === idProduto);
-    if (!produto || !liberadoParaVenda(produto)) return;
+    if (!produto || !liberadoParaVenda(produto) || produto.precoPendente) return;
 
     // Produto com sabores: abre a escolha de sabor antes de adicionar
     if (produto.sabores && !sabor) {
