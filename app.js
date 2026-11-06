@@ -373,7 +373,7 @@ function htmlCategoria() {
     if (total === 0) {
         html += htmlVazio(`${grupo.nome} em breve!`, 'Estamos preparando ofertas especiais pra voc&ecirc;.');
     } else {
-        const comTitulos = categorias.length > 1;
+        const comTitulos = !!grupo.titulosSempre || categorias.length > 1;
         html += '<div class="products-grid">';
         categorias.forEach(c => {
             if (comTitulos) html += `<h3 class="section-title">${TITULOS_SECAO[c] || c}</h3>`;
