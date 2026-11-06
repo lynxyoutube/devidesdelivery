@@ -388,7 +388,7 @@ function htmlCategoria() {
 function htmlBusca() {
     const termo = normalizar(termoBusca);
     const filtrados = PRODUTOS.filter(produto => liberadoParaVenda(produto) &&
-        normalizar(`${produto.nome} ${produto.descricao || ''} ${(produto.sabores || []).join(' ')}`).includes(termo));
+        normalizar(`${produto.nome} ${produto.volume || ''} ${produto.descricao || ''} ${(produto.sabores || []).join(' ')}`).includes(termo));
 
     const topo = htmlTopoSecao(`Resultados para &ldquo;${escaparHtml(termoBusca)}&rdquo;`, textoContagem(filtrados.length));
     if (filtrados.length === 0) {
@@ -615,7 +615,7 @@ function atualizarCarrinhoVisual() {
                 <div class="cart-item">
                     <div style="flex: 1; padding-right: 8px;">
                         <div class="cart-item-name">${item.nome}${item.sabor ? ' - ' + item.sabor : ''}</div>
-                        <div class="cart-item-sub">R$ ${item.preco.toFixed(2).replace('.', ',')} un. (${item.volume})</div>
+                        <div class="cart-item-sub">R$ ${item.preco.toFixed(2).replace('.', ',')} un.${item.volume ? ' (' + item.volume + ')' : ''}</div>
                     </div>
                     <div class="cart-item-actions">
                         <div class="qty-control">
@@ -752,7 +752,7 @@ function enviarPedidoWhatsApp() {
 
     carrinho.forEach(item => {
         const itemTotal = (item.preco * item.qtd).toFixed(2).replace('.', ',');
-        mensagem += `▪️ ${item.qtd}x ${item.nome}${item.sabor ? ' - ' + item.sabor : ''} (${item.volume}) - R$ ${itemTotal}\n`;
+        mensagem += `▪️ ${item.qtd}x ${item.nome}${item.sabor ? ' - ' + item.sabor : ''} ${item.volume ? '(' + item.volume + ') ' : ''}- R$ ${itemTotal}\n`;
     });
 
     mensagem += `─────────────────────────\n`;

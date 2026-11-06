@@ -532,8 +532,14 @@ body.vista-categoria .hero {
 }
 
 .product-volume {
-    font-size: 0.78rem;
-    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fbbf24;
+    letter-spacing: 0.2px;
+}
+
+.product-volume:empty {
+    display: none;
 }
 
 .product-price {
