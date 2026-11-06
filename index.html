@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" href="icons/icon-192.png">
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-title" content="Devides">
-    <link rel="stylesheet" href="style.css?v=202611051900">
+    <link rel="stylesheet" href="style.css?v=202611052110">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -64,6 +64,12 @@
     <main class="main-container">
         <!-- CHAMADA + BUSCA -->
         <section class="hero">
+            <button type="button" class="horario-chip" id="horario-chip" aria-haspopup="dialog" aria-controls="horario-modal" hidden>
+                <span class="horario-dot" aria-hidden="true"></span>
+                <span class="horario-chip-texto" id="horario-chip-texto"></span>
+                <span class="horario-chip-ver">Ver hor&aacute;rios</span>
+                <svg class="horario-chip-seta" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
             <h2 class="hero-title">Sua bebida favorita, <span>sem sair de casa.</span></h2>
             <p class="hero-sub">Delivery e retirada com praticidade. Escolha, adicione ao carrinho e finalize pelo WhatsApp.</p>
             <div class="search-box">
@@ -225,6 +231,8 @@
 
     <!-- SCRIPTS -->
     <script src="products.js?v=202611031855"></script>
+    <script src="horarios.js?v=202611052110"></script>
+    <script src="motion.js?v=202611052050"></script>
     <script src="app.js?v=202611031855"></script>
 <script>
 if ('serviceWorker' in navigator) {

@@ -1454,3 +1454,296 @@ body.vista-categoria .hero {
         --cat-cols: 2;
     }
 }
+
+/* ===================================================
+   MOTION: EFEITO DE ROLAGEM
+   So vale quando o motion.js liga a classe "motion" no <html>.
+   Usa a propriedade "translate" para nao brigar com o "transform" do hover.
+   =================================================== */
+.motion .reveal:not(.in):not(.reveal-ja) {
+    opacity: 0;
+    translate: 0 26px;
+}
+
+.motion .secao-topo.reveal:not(.in):not(.reveal-ja) {
+    translate: -18px 0;
+}
+
+.motion .reveal.in {
+    animation: revelarSubindo 0.65s cubic-bezier(0.22, 0.8, 0.3, 1) both;
+    animation-delay: var(--reveal-delay, 0ms);
+}
+
+.motion .secao-topo.reveal.in {
+    animation-name: revelarLado;
+}
+
+@keyframes revelarSubindo {
+    from {
+        opacity: 0;
+        translate: 0 26px;
+    }
+    to {
+        opacity: 1;
+        translate: none;
+    }
+}
+
+@keyframes revelarLado {
+    from {
+        opacity: 0;
+        translate: -18px 0;
+    }
+    to {
+        opacity: 1;
+        translate: none;
+    }
+}
+
+/* Entrada da chamada principal ao abrir o site */
+.motion .hero-title,
+.motion .hero-sub,
+.motion .search-box {
+    animation: revelarSubindo 0.7s cubic-bezier(0.22, 0.8, 0.3, 1) both;
+}
+
+.motion .hero-sub {
+    animation-delay: 0.1s;
+}
+
+.motion .search-box {
+    animation-delay: 0.2s;
+}
+
+
+/* ===================================================
+   HORARIO DE FUNCIONAMENTO (selo na pagina inicial + janela)
+   =================================================== */
+.horario-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 16px;
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: left;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.horario-chip[hidden] {
+    display: none;
+}
+
+.horario-chip:hover {
+    border-color: var(--border-accent);
+    background: var(--bg-card-hover);
+}
+
+.horario-chip:focus-visible,
+.horario-overlay .close-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.horario-dot {
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: horarioPulso 2s ease-out infinite;
+}
+
+.horario-chip.fechado .horario-dot {
+    background: #ef4444;
+    animation: none;
+}
+
+.horario-chip.fechando .horario-dot,
+.horario-chip.retirada .horario-dot {
+    background: #f59e0b;
+    animation: none;
+}
+
+@keyframes horarioPulso {
+    0% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+.horario-chip-ver {
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.horario-chip-seta {
+    flex-shrink: 0;
+    color: var(--text-muted);
+}
+
+.horario-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 105;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+}
+
+.horario-overlay.open {
+    display: flex;
+}
+
+.horario-box {
+    width: 100%;
+    max-width: 420px;
+    margin: auto;
+    padding: 18px 18px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card), var(--shadow-accent);
+    animation: horarioEntrar 0.22s ease-out;
+}
+
+@keyframes horarioEntrar {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.horario-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.horario-titulo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.horario-titulo svg {
+    flex-shrink: 0;
+    color: var(--accent);
+}
+
+.horario-status {
+    margin-bottom: 14px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.horario-status.fechado {
+    color: #f87171;
+}
+
+.horario-status.fechando,
+.horario-status.retirada {
+    color: #fbbf24;
+}
+
+.horario-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.horario-linha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 14px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+}
+
+.horario-linha.hoje {
+    border-color: var(--accent);
+    background: rgba(34, 197, 94, 0.08);
+}
+
+.horario-dia {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.horario-hoje-tag {
+    padding: 2px 8px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    background: var(--accent);
+    border-radius: 999px;
+}
+
+.horario-horas {
+    font-weight: 600;
+    text-align: right;
+    color: var(--text-primary);
+}
+
+.horario-linha.fechado .horario-horas {
+    color: #f87171;
+}
+
+.horario-linha.retirada .horario-horas {
+    color: #fbbf24;
+}
+
+@media (max-width: 480px) {
+    .horario-chip {
+        font-size: 0.84rem;
+    }
+
+    .horario-chip-ver {
+        display: none;
+    }
+}
+
+/* Entra junto com o resto da chamada, quando o efeito de movimento esta ligado */
+.motion .horario-chip {
+    animation: revelarSubindo 0.7s cubic-bezier(0.22, 0.8, 0.3, 1) both;
+}
