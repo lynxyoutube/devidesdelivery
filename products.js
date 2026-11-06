@@ -105,7 +105,7 @@ const PRODUTOS = [
     { id: 62, nome: "Stempel Red (355ml)", categoria: "drinks", preco: 8.00, volume: "355ml", descricao: "Gelado.", imagem: "logo.jpg" },
 
     // --- DESTILADOS ---
-    { id: 63, nome: "Cacha\u00e7a 51", categoria: "destilados", preco: 18.00, volume: "", descricao: "Cacha\u00e7a.", imagem: "logo.jpg" },
+    { id: 63, nome: "Cacha\u00e7a 51", categoria: "destilados", preco: 18.00, volume: "", descricao: "Cacha\u00e7a.", imagem: "imagens/cachaca-51.jpg" },
     { id: 64, nome: "Cacha\u00e7a Velho Barreiro", categoria: "destilados", preco: 18.00, volume: "", descricao: "Cacha\u00e7a.", imagem: "logo.jpg" },
     { id: 65, nome: "Cacha\u00e7a Jamel", categoria: "destilados", preco: 18.00, volume: "", descricao: "Cacha\u00e7a.", imagem: "logo.jpg" },
     { id: 66, nome: "Askov Maracuj\u00e1 (900ml)", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "logo.jpg" },
