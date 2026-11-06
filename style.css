@@ -100,8 +100,8 @@ button {
 }
 
 .brand-logo-img {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--accent);
@@ -110,16 +110,18 @@ button {
 }
 
 .brand-name {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 800;
     color: #ffffff;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 1.08;
+    letter-spacing: 0.6px;
     white-space: nowrap;
 }
 
 .brand-name span {
-    color: var(--accent);
+    display: block;
+    color: #fbbf24;
 }
 
 .cart-header-btn {
@@ -1768,4 +1770,46 @@ body.vista-categoria .hero {
     font-size: 0.82rem;
     font-weight: 600;
     opacity: 0.8;
+}
+
+/* ===== Instagram (discreto) ===== */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.insta-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    background: transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.insta-btn:hover,
+.insta-btn:focus-visible {
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.5);
+}
+
+.footer-social {
+    margin-top: 6px;
+    font-size: 0.82rem;
+}
+
+.footer-social a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-social a:hover {
+    color: #fbbf24;
 }
