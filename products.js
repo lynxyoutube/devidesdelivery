@@ -4,7 +4,9 @@ const CONFIG = {
     nomeLoja: "Devides Delivery",
     slogan: "Pediu, chegou, gelou!",
     // WhatsApp da loja: 55 + DDD + número (+55 18 99604-9894)
-    whatsapp: "5518996049894", 
+    whatsapp: "5518996049894",
+    // Cidade das entregas: entra no link de rota do Google Maps enviado no pedido (evita abrir rua de outra cidade)
+    cidadeEntrega: "Bilac, SP, Brasil",
     taxaEntregaFixa: 2.00, // Taxa fixa de entrega (não é cobrada na retirada no local)
     // Etiqueta verde pequena em cima da foto (mostra o campo volume do produto). true = mostrar
     mostrarEtiquetaVolume: false,
@@ -49,7 +51,7 @@ const PRODUTOS = [
     { id: 19, nome: "Heineken Lata", categoria: "cervejas", preco: 6.00, volume: "350ml", descricao: "Cerveja gelada.", imagem: "imagens/heineken-lata.jpg" },
 
     // --- GARRAFINHAS / ROMARINHO 300ml (aba "Garrafinhas") ---
-    { id: 9, nome: "Conti Romarinho", categoria: "garrafinhas", preco: 2.50, volume: "300ml", descricao: "Cerveja gelada.", imagem: "imagens/conti-romarinho.jpg" },
+    { id: 9, nome: "Conti Romarinho", categoria: "garrafinhas", preco: 2.99, volume: "300ml", descricao: "Cerveja gelada.", imagem: "imagens/conti-romarinho.jpg" },
     { id: 20, nome: "Brahma Romarinho", categoria: "garrafinhas", preco: 2.99, volume: "300ml", descricao: "Cerveja gelada.", imagem: "imagens/brahma-romarinho.jpg" },
     { id: 21, nome: "Skol Romarinho", categoria: "garrafinhas", preco: 2.99, volume: "300ml", descricao: "Cerveja gelada.", imagem: "imagens/skol-romarinho.jpg" },
     { id: 22, nome: "Antarctica Romarinho", categoria: "garrafinhas", preco: 2.99, volume: "300ml", descricao: "Cerveja gelada.", imagem: "imagens/antarctica-romarinho.jpg" },
@@ -61,6 +63,8 @@ const PRODUTOS = [
     { id: 26, nome: "Amstel Ultra", categoria: "longneck", preco: 7.50, volume: "Long Neck · 275ml", descricao: "Long neck gelada.", imagem: "imagens/amstel-ultra-longneck.jpg" },
     { id: 27, nome: "Spaten", categoria: "longneck", preco: 7.79, volume: "Long Neck · 330ml", descricao: "Long neck gelada.", imagem: "imagens/spaten-longneck.jpg" },
     { id: 28, nome: "Moinho Real", categoria: "longneck", preco: 3.50, volume: "Long Neck · 330ml", descricao: "Long neck gelada.", imagem: "imagens/moinho-real-longneck.jpg" },
+    { id: 86, nome: "Império Ultra", categoria: "longneck", preco: 6.50, volume: "Long Neck · 275ml", descricao: "Long neck gelada.", imagem: "logo.jpg" },
+    { id: 94, nome: "Michelob", categoria: "longneck", preco: 0.00, precoPendente: true, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "logo.jpg" },
 
     // --- ENERGETICOS (aba "Energeticos": cada marca vira uma secao com titulo verde) ---
     // Marcas: categoria "baly", "monster" ou "redbull". A ordem das secoes e a de CONFIG.grupos (Baly, Monster, Red Bull).
@@ -90,6 +94,12 @@ const PRODUTOS = [
     { id: 44, nome: "H2O", categoria: "refrigerantes", preco: 12.00, volume: "1,5L", descricao: "H2O gelado.", imagem: "imagens/h2o-1-5l.jpg" },
     // [REMOVIDO POR ENQUANTO - tire as // para voltar] { id: 45, nome: "\u00c1gua", categoria: "refrigerantes", preco: 2.00, volume: "", descricao: "\u00c1gua gelada.", imagem: "logo.jpg" },
     { id: 46, nome: "\u00c1gua com G\u00e1s", categoria: "refrigerantes", preco: 3.00, volume: "", descricao: "\u00c1gua com g\u00e1s gelada.", imagem: "imagens/agua-com-gas.jpg" },
+    { id: 87, nome: "Coca-Cola Zero Lata", categoria: "refrigerantes", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "logo.jpg" },
+    { id: 88, nome: "Sprite Lata", categoria: "refrigerantes", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "logo.jpg" },
+    { id: 89, nome: "Guaraná Antarctica Lata", categoria: "refrigerantes", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "logo.jpg" },
+    { id: 90, nome: "Fanta Uva Lata", categoria: "refrigerantes", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "logo.jpg" },
+    { id: 91, nome: "Água Mineral Cristalins", categoria: "refrigerantes", preco: 2.00, volume: "500ml", descricao: "Água mineral gelada.", imagem: "logo.jpg" },
+    { id: 92, nome: "Suco Life Uva", categoria: "refrigerantes", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Suco de uva gelado.", imagem: "logo.jpg" },
 
     // --- DRINKS PRONTOS (Corote, Drinkball, Ice...) ---
     { id: 47, nome: "Corote Velho Barreiro", categoria: "drinks", preco: 5.00, volume: "500ml", descricao: "Drink pronto gelado.", imagem: "imagens/corote-velho-barreiro-500ml.jpg" },
@@ -99,29 +109,35 @@ const PRODUTOS = [
     { id: 51, nome: "Corote Blueberry", categoria: "drinks", preco: 6.00, volume: "500ml", descricao: "Drink pronto gelado.", imagem: "imagens/corote-blueberry-500ml.jpg" },
     { id: 52, nome: "Corote Baunilha com Lim\u00e3o", categoria: "drinks", preco: 6.00, volume: "500ml", descricao: "Drink pronto gelado.", imagem: "imagens/corote-baunilha-limao-500ml.jpg" },
     { id: 53, nome: "Corote Melancia", categoria: "drinks", preco: 6.00, volume: "500ml", descricao: "Drink pronto gelado.", imagem: "imagens/corote-melancia-500ml.jpg" },
-    { id: 54, nome: "Drinkball Doce de Leite", categoria: "drinks", preco: 7.00, volume: "", descricao: "Drink pronto gelado.", imagem: "imagens/drinkball-doce-de-leite.jpg" },
-    { id: 55, nome: "Drinkball Chocolate", categoria: "drinks", preco: 7.00, volume: "", descricao: "Drink pronto gelado.", imagem: "imagens/drinkball-chocolate.jpg" },
-    { id: 56, nome: "Askov Ice Lim\u00e3o", categoria: "drinks", preco: 7.00, volume: "", descricao: "Drink pronto gelado.", imagem: "imagens/askov-ice-limao.jpg" },
-    { id: 57, nome: "Askov Ice Maracuj\u00e1", categoria: "drinks", preco: 7.00, volume: "", descricao: "Drink pronto gelado.", imagem: "imagens/askov-ice-maracuja.jpg" },
-    { id: 58, nome: "Askov Ice Frutas Vermelhas", categoria: "drinks", preco: 7.00, volume: "", descricao: "Drink pronto gelado.", imagem: "imagens/askov-ice-frutas-vermelhas.jpg" },
+    { id: 54, nome: "Drinkball Doce de Leite", categoria: "drinks", preco: 7.00, volume: "300ml", descricao: "Drink pronto gelado.", imagem: "imagens/drinkball-doce-de-leite.jpg" },
+    { id: 55, nome: "Drinkball Chocolate", categoria: "drinks", preco: 7.00, volume: "300ml", descricao: "Drink pronto gelado.", imagem: "imagens/drinkball-chocolate.jpg" },
+    { id: 56, nome: "Askov Ice Lim\u00e3o", categoria: "drinks", preco: 7.00, volume: "275ml", descricao: "Drink pronto gelado.", imagem: "imagens/askov-ice-limao.jpg" },
+    { id: 57, nome: "Askov Ice Maracuj\u00e1", categoria: "drinks", preco: 7.00, volume: "275ml", descricao: "Drink pronto gelado.", imagem: "imagens/askov-ice-maracuja.jpg" },
+    { id: 58, nome: "Askov Ice Frutas Vermelhas", categoria: "drinks", preco: 7.00, volume: "275ml", descricao: "Drink pronto gelado.", imagem: "imagens/askov-ice-frutas-vermelhas.jpg" },
     { id: 59, nome: "Contini Ice Lim\u00e3o", categoria: "drinks", preco: 7.00, volume: "", descricao: "Drink pronto gelado.", imagem: "imagens/contini-ice-limao.jpg" },
     { id: 60, nome: "Contini Ice Frutas Vermelhas", categoria: "drinks", preco: 7.00, volume: "", descricao: "Drink pronto gelado.", imagem: "imagens/contini-ice-frutas-vermelhas.jpg" },
     { id: 61, nome: "Chopp de Vinho Stempel", categoria: "drinks", preco: 12.00, volume: "600ml", descricao: "Chopp de vinho gelado.", imagem: "imagens/chopp-vinho-stempel-600ml.jpg" },
     { id: 62, nome: "Stempel Red", categoria: "drinks", preco: 8.00, volume: "355ml", descricao: "Gelado.", imagem: "imagens/stempel-red-355ml.jpg" },
 
     // --- DESTILADOS ---
-    { id: 63, nome: "Cacha\u00e7a 51", categoria: "destilados", preco: 18.00, volume: "", descricao: "Cacha\u00e7a.", imagem: "imagens/cachaca-51.jpg" },
-    { id: 64, nome: "Cacha\u00e7a Velho Barreiro", categoria: "destilados", preco: 18.00, volume: "", descricao: "Cacha\u00e7a.", imagem: "imagens/cachaca-velho-barreiro.jpg" },
-    { id: 65, nome: "Cacha\u00e7a Jamel", categoria: "destilados", preco: 18.00, volume: "", descricao: "Cacha\u00e7a.", imagem: "imagens/cachaca-jamel.jpg" },
+    { id: 63, nome: "Cacha\u00e7a 51", categoria: "destilados", preco: 18.00, volume: "965ml", descricao: "Cacha\u00e7a.", imagem: "imagens/cachaca-51.jpg" },
+    { id: 64, nome: "Cacha\u00e7a Velho Barreiro", categoria: "destilados", preco: 18.00, volume: "965ml", descricao: "Cacha\u00e7a.", imagem: "imagens/cachaca-velho-barreiro.jpg" },
+    { id: 65, nome: "Cacha\u00e7a Jamel", categoria: "destilados", preco: 18.00, volume: "965ml", descricao: "Cacha\u00e7a.", imagem: "imagens/cachaca-jamel.jpg" },
     { id: 66, nome: "Askov Maracuj\u00e1", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/askov-maracuja-900ml.jpg" },
     { id: 67, nome: "Askov Kiwi", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/askov-kiwi-900ml.jpg" },
     { id: 68, nome: "Askov Frutas Vermelhas", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/askov-frutas-vermelhas-900ml.jpg" },
     { id: 69, nome: "Askov Lim\u00e3o", categoria: "destilados", preco: 20.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/askov-limao-900ml.jpg" },
+    { id: 93, nome: "Vodka Askov", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "logo.jpg" },
     { id: 70, nome: "Conhaque Presidente", categoria: "destilados", preco: 25.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/conhaque-presidente-900ml.jpg" },
     { id: 71, nome: "Campari", categoria: "destilados", preco: 70.00, volume: "", descricao: "Garrafa.", imagem: "imagens/campari.jpg" },
     { id: 75, nome: "Gin Invictus Strawberry", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/gin-invictus-strawberry-900ml.jpg" },
     { id: 76, nome: "Gin Invictus Melancia", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/gin-invictus-melancia-900ml.jpg" },
     { id: 77, nome: "Gin Invictus Tropical", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/gin-invictus-tropical-900ml.jpg" },
+    { id: 81, nome: "Gin Invictus Maçã Verde", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "logo.jpg" },
+    { id: 82, nome: "Busca Brisa Psico Spirit", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "1L", descricao: "Garrafa 1L.", imagem: "logo.jpg" },
+    { id: 83, nome: "Vinho Góes Quinta dos Vinhedos Tinto Seco", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "1L", descricao: "Vinho de mesa tinto seco 1L.", imagem: "logo.jpg" },
+    { id: 84, nome: "Vinho Góes Quinta dos Vinhedos Tinto Suave", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "1L", descricao: "Vinho de mesa tinto suave 1L.", imagem: "logo.jpg" },
+    { id: 85, nome: "Smirnoff Vodka", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "", descricao: "Vodka.", imagem: "logo.jpg" },
 
     // --- GELO ---
     { id: 72, nome: "Gelo", categoria: "gelo", preco: 8.50, volume: "2,5kg", descricao: "Pacote de gelo 2,5kg.", imagem: "imagens/gelo-2-5kg.jpg" },
