@@ -86,7 +86,7 @@ const PRODUTOS = [
     // --- REFRIGERANTES E AGUA ---
     { id: 39, nome: "Coca-Cola", categoria: "garrafas", preco: 14.00, volume: "2L", descricao: "Refrigerante 2L gelado.", imagem: "imagens/coca-cola-2l.jpg" },
     { id: 40, nome: "Coca-Cola Retorn\u00e1vel", categoria: "garrafas", preco: 10.00, volume: "2L", descricao: "Garrafa retorn\u00e1vel 2L.", imagem: "imagens/coca-cola-2l-retornavel.jpg" },
-    { id: 41, nome: "Guaran\u00e1 Bol", categoria: "garrafas", preco: 7.00, volume: "", descricao: "Refrigerante gelado.", imagem: "imagens/guarana-bol-2l.jpg" },
+    { id: 41, nome: "Guaran\u00e1 Bol", categoria: "garrafas", preco: 7.00, volume: "2L", descricao: "Refrigerante gelado.", imagem: "imagens/guarana-bol-2l.jpg" },
     { id: 42, nome: "Fanta Lata", categoria: "latas", preco: 4.00, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "imagens/fanta-lata-350ml.jpg" },
     { id: 43, nome: "H2O", categoria: "garrafas", preco: 6.50, volume: "500ml", descricao: "H2O gelado.", imagem: "imagens/h2o-500ml.jpg" },
     { id: 44, nome: "H2O", categoria: "garrafas", preco: 12.00, volume: "1,5L", descricao: "H2O gelado.", imagem: "imagens/h2o-1-5l.jpg" },
