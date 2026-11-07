@@ -1813,3 +1813,22 @@ body.vista-categoria .hero {
 .footer-social a:hover {
     color: #fbbf24;
 }
+
+/* ===== NOME GRANDE: o titulo do produto "passeia" quando nao cabe no card ===== */
+.product-title.marquee {
+    display: block;
+    -webkit-line-clamp: unset;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.marquee-texto {
+    display: inline-block;
+    will-change: transform;
+    animation: nome-passeando var(--marquee-dur, 8s) ease-in-out infinite alternate;
+}
+
+@keyframes nome-passeando {
+    0%, 18% { transform: translateX(0); }
+    82%, 100% { transform: translateX(calc(-1 * var(--marquee-dist, 0px))); }
+}

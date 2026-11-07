@@ -410,7 +410,58 @@ function renderizarProdutos() {
     } else {
         container.innerHTML = htmlInicio();
     }
+    requestAnimationFrame(ajustarTitulosLongos);
 }
+
+// ===================================================
+// NOMES GRANDES: o titulo "passeia" quando nao cabe inteiro no card
+// ===================================================
+const reduzMovimento = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+function ajustarTitulosLongos() {
+    // Quem desliga as animacoes no celular continua vendo o nome cortado com "..." como antes
+    if (reduzMovimento) return;
+
+    document.querySelectorAll('.product-title').forEach(titulo => {
+        // Volta ao normal antes de medir (vale tambem depois de girar a tela)
+        if (titulo.classList.contains('marquee')) {
+            titulo.textContent = titulo.dataset.nome || titulo.textContent;
+            titulo.classList.remove('marquee');
+            titulo.style.removeProperty('--marquee-dist');
+            titulo.style.removeProperty('--marquee-dur');
+        }
+
+        // Cabe em ate 2 linhas: nao precisa passear
+        if (titulo.scrollHeight <= titulo.clientHeight + 1) return;
+
+        const nome = titulo.textContent;
+        titulo.dataset.nome = nome;
+        titulo.textContent = '';
+        const texto = document.createElement('span');
+        texto.className = 'marquee-texto';
+        texto.textContent = nome;
+        titulo.appendChild(texto);
+        titulo.classList.add('marquee');
+
+        const sobra = texto.offsetWidth - titulo.clientWidth;
+        if (sobra <= 2) {
+            // Na pratica coube: desfaz
+            titulo.textContent = nome;
+            titulo.classList.remove('marquee');
+            return;
+        }
+        titulo.style.setProperty('--marquee-dist', (Math.ceil(sobra) + 6) + 'px');
+        // ~30px por segundo de movimento (as pausas nas pontas ja estao na animacao)
+        titulo.style.setProperty('--marquee-dur', Math.max(5, (sobra / 30) / 0.64).toFixed(1) + 's');
+    });
+}
+
+let temporizadorTitulos;
+window.addEventListener('resize', () => {
+    clearTimeout(temporizadorTitulos);
+    temporizadorTitulos = setTimeout(ajustarTitulosLongos, 150);
+});
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustarTitulosLongos);
 
 // ===================================================
 // GERENCIAMENTO DO CARRINHO
