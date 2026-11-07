@@ -62,7 +62,7 @@ const PRODUTOS = [
     { id: 27, nome: "Spaten", categoria: "longneck", preco: 7.79, volume: "Long Neck · 330ml", descricao: "Long neck gelada.", imagem: "imagens/spaten-longneck.jpg" },
     { id: 28, nome: "Moinho Real", categoria: "longneck", preco: 3.50, volume: "Long Neck · 330ml", descricao: "Long neck gelada.", imagem: "imagens/moinho-real-longneck.jpg" },
     { id: 86, nome: "Império Ultra", categoria: "longneck", preco: 7.00, volume: "Long Neck · 275ml", descricao: "Long neck gelada.", imagem: "imagens/imperio-ultra-longneck.jpg" },
-    { id: 94, nome: "Michelob", categoria: "longneck", preco: 7.00, volume: "Long Neck · 330ml", descricao: "Long neck gelada.", imagem: "logo.jpg" },
+    { id: 94, nome: "Michelob", categoria: "longneck", preco: 7.00, volume: "Long Neck · 330ml", descricao: "Long neck gelada.", imagem: "imagens/michelob-longneck.jpg" },
 
     // --- ENERGETICOS (aba "Energeticos": cada marca vira uma secao com titulo verde) ---
     // Marcas: categoria "baly", "monster" ou "redbull". A ordem das secoes e a de CONFIG.grupos (Baly, Monster, Red Bull).
