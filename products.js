@@ -5,8 +5,6 @@ const CONFIG = {
     slogan: "Pediu, chegou, gelou!",
     // WhatsApp da loja: 55 + DDD + número (+55 18 99604-9894)
     whatsapp: "5518996049894",
-    // Cidade das entregas: entra no link de rota do Google Maps enviado no pedido (evita abrir rua de outra cidade)
-    cidadeEntrega: "Bilac, SP, Brasil",
     taxaEntregaFixa: 2.00, // Taxa fixa de entrega (não é cobrada na retirada no local)
     // Etiqueta verde pequena em cima da foto (mostra o campo volume do produto). true = mostrar
     mostrarEtiquetaVolume: false,
@@ -63,8 +61,8 @@ const PRODUTOS = [
     { id: 26, nome: "Amstel Ultra", categoria: "longneck", preco: 7.50, volume: "Long Neck · 275ml", descricao: "Long neck gelada.", imagem: "imagens/amstel-ultra-longneck.jpg" },
     { id: 27, nome: "Spaten", categoria: "longneck", preco: 7.79, volume: "Long Neck · 330ml", descricao: "Long neck gelada.", imagem: "imagens/spaten-longneck.jpg" },
     { id: 28, nome: "Moinho Real", categoria: "longneck", preco: 3.50, volume: "Long Neck · 330ml", descricao: "Long neck gelada.", imagem: "imagens/moinho-real-longneck.jpg" },
-    { id: 86, nome: "Império Ultra", categoria: "longneck", preco: 6.50, volume: "Long Neck · 275ml", descricao: "Long neck gelada.", imagem: "logo.jpg" },
-    { id: 94, nome: "Michelob", categoria: "longneck", preco: 0.00, precoPendente: true, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "logo.jpg" },
+    { id: 86, nome: "Império Ultra", categoria: "longneck", preco: 7.00, volume: "Long Neck · 275ml", descricao: "Long neck gelada.", imagem: "logo.jpg" },
+    { id: 94, nome: "Michelob", categoria: "longneck", preco: 7.00, volume: "Long Neck", descricao: "Long neck gelada.", imagem: "logo.jpg" },
 
     // --- ENERGETICOS (aba "Energeticos": cada marca vira uma secao com titulo verde) ---
     // Marcas: categoria "baly", "monster" ou "redbull". A ordem das secoes e a de CONFIG.grupos (Baly, Monster, Red Bull).
