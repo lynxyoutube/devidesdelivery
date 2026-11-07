@@ -92,7 +92,7 @@ const PRODUTOS = [
     { id: 44, nome: "H2O", categoria: "garrafas", preco: 12.00, volume: "1,5L", descricao: "H2O gelado.", imagem: "imagens/h2o-1-5l.jpg" },
     // [REMOVIDO POR ENQUANTO - tire as // para voltar] { id: 45, nome: "\u00c1gua", categoria: "garrafas", preco: 2.00, volume: "", descricao: "\u00c1gua gelada.", imagem: "logo.jpg" },
     { id: 46, nome: "\u00c1gua com G\u00e1s", categoria: "garrafas", preco: 3.00, volume: "", descricao: "\u00c1gua com g\u00e1s gelada.", imagem: "imagens/agua-com-gas.jpg" },
-    { id: 87, nome: "Coca-Cola Zero Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "logo.jpg" },
+    { id: 87, nome: "Coca-Cola Zero Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "imagens/coca-cola-zero-lata-350ml.jpg" },
     { id: 88, nome: "Sprite Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "logo.jpg" },
     { id: 89, nome: "Guaraná Antarctica Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "logo.jpg" },
     { id: 90, nome: "Fanta Uva Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "logo.jpg" },
