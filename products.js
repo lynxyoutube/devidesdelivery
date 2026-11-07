@@ -93,7 +93,7 @@ const PRODUTOS = [
     // [REMOVIDO POR ENQUANTO - tire as // para voltar] { id: 45, nome: "\u00c1gua", categoria: "garrafas", preco: 2.00, volume: "", descricao: "\u00c1gua gelada.", imagem: "logo.jpg" },
     { id: 46, nome: "\u00c1gua com G\u00e1s", categoria: "garrafas", preco: 3.00, volume: "", descricao: "\u00c1gua com g\u00e1s gelada.", imagem: "imagens/agua-com-gas.jpg" },
     { id: 87, nome: "Coca-Cola Zero Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "imagens/coca-cola-zero-lata-350ml.jpg" },
-    { id: 88, nome: "Sprite Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "imagens/sprite-lata-350ml.jpg" },
+    { id: 88, nome: "Sprite Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "imagens/sprite-lata-350ml-v2.jpg" },
     { id: 89, nome: "Guaraná Antarctica Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "logo.jpg" },
     { id: 90, nome: "Fanta Uva Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "logo.jpg" },
     { id: 91, nome: "Água Mineral Cristalins", categoria: "garrafas", preco: 2.00, volume: "500ml", descricao: "Água mineral gelada.", imagem: "logo.jpg" },
