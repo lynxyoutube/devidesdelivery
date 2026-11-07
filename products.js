@@ -96,8 +96,8 @@ const PRODUTOS = [
     { id: 88, nome: "Sprite Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "imagens/sprite-lata-350ml-v3.jpg" },
     { id: 89, nome: "Guaraná Antarctica Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "imagens/guarana-antarctica-lata-350ml.jpg" },
     { id: 90, nome: "Fanta Uva Lata", categoria: "latas", preco: 0.00, precoPendente: true, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "imagens/fanta-uva-lata-350ml.jpg" },
-    { id: 91, nome: "Água Mineral Cristalins (600ml)", categoria: "garrafas", preco: 2.00, volume: "600ml", descricao: "Água mineral gelada.", imagem: "imagens/agua-mineral-cristalins-600ml.jpg" },
-    { id: 92, nome: "Suco Life Uva (900ml)", categoria: "garrafas", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Suco de uva gelado.", imagem: "imagens/suco-life-uva-900ml.jpg" },
+    { id: 91, nome: "Água Mineral Cristalins", categoria: "garrafas", preco: 2.00, volume: "600ml", descricao: "Água mineral gelada.", imagem: "imagens/agua-mineral-cristalins-600ml.jpg" },
+    { id: 92, nome: "Suco Life Uva", categoria: "garrafas", preco: 0.00, precoPendente: true, volume: "900ml", descricao: "Suco de uva gelado.", imagem: "imagens/suco-life-uva-900ml.jpg" },
 
     // --- DRINKS PRONTOS (Corote, Drinkball, Ice...) ---
     { id: 47, nome: "Corote Velho Barreiro", categoria: "drinks", preco: 5.00, volume: "500ml", descricao: "Drink pronto gelado.", imagem: "imagens/corote-velho-barreiro-500ml.jpg" },
