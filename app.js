@@ -23,7 +23,8 @@ const TITULOS_SECAO = {
     baly: 'Baly',
     monster: 'Monster',
     redbull: 'Red Bull',
-    refrigerantes: 'Refrigerantes e &Aacute;gua',
+    latas: 'Latas',
+    garrafas: 'Garrafas',
     gelo: 'Gelo',
     combos: 'Combos'
 };
