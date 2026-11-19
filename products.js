@@ -100,7 +100,7 @@ const PRODUTOS = [
     { id: 90, nome: "Fanta Uva Lata", categoria: "latas", preco: 4.00, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "imagens/fanta-uva-lata-350ml.jpg" },
     { id: 91, nome: "Água Mineral Cristalins", categoria: "garrafas", preco: 2.00, volume: "600ml", descricao: "Água mineral gelada.", imagem: "imagens/agua-mineral-cristalins-600ml.jpg" },
     { id: 92, nome: "Suco Life Uva", categoria: "garrafas", preco: 15.00, volume: "900ml", descricao: "Suco de uva gelado.", imagem: "imagens/suco-life-uva-900ml.jpg" },
-    { id: 98, nome: "Suco Del Valle Uva", categoria: "garrafas", preco: 13.00, volume: "1L", descricao: "Suco de uva gelado.", imagem: "imagens/suco-del-valle-uva-1l.png" },
+    { id: 98, nome: "Suco Del Valle Uva", categoria: "garrafas", preco: 13.00, volume: "1L", descricao: "Suco de uva gelado.", imagem: "imagens/suco-del-valle-uva-1l-v2.png" },
     { id: 99, nome: "Suco Del Valle Laranja", categoria: "garrafas", preco: 13.00, volume: "1L", descricao: "Suco de laranja gelado.", imagem: "imagens/suco-del-valle-laranja-1l.png" },
 
     // --- DRINKS PRONTOS (Corote, Drinkball, Ice...) ---
