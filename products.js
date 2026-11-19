@@ -100,6 +100,8 @@ const PRODUTOS = [
     { id: 90, nome: "Fanta Uva Lata", categoria: "latas", preco: 4.00, volume: "350ml", descricao: "Refrigerante lata gelado.", imagem: "imagens/fanta-uva-lata-350ml.jpg" },
     { id: 91, nome: "Água Mineral Cristalins", categoria: "garrafas", preco: 2.00, volume: "600ml", descricao: "Água mineral gelada.", imagem: "imagens/agua-mineral-cristalins-600ml.jpg" },
     { id: 92, nome: "Suco Life Uva", categoria: "garrafas", preco: 15.00, volume: "900ml", descricao: "Suco de uva gelado.", imagem: "imagens/suco-life-uva-900ml.jpg" },
+    { id: 98, nome: "Suco Del Valle Uva", categoria: "garrafas", preco: 13.00, volume: "1L", descricao: "Suco de uva gelado.", imagem: "logo.jpg" },
+    { id: 99, nome: "Suco Del Valle Laranja", categoria: "garrafas", preco: 13.00, volume: "1L", descricao: "Suco de laranja gelado.", imagem: "logo.jpg" },
 
     // --- DRINKS PRONTOS (Corote, Drinkball, Ice...) ---
     { id: 47, nome: "Corote Velho Barreiro", categoria: "drinks", preco: 5.00, volume: "500ml", descricao: "Drink pronto gelado.", imagem: "imagens/corote-velho-barreiro-500ml.jpg" },
@@ -134,7 +136,7 @@ const PRODUTOS = [
     { id: 76, nome: "Gin Invictus Melancia", categoria: "destilados", preco: 18.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/gin-invictus-melancia-900ml.jpg" },
     { id: 77, nome: "Gin Invictus Tropical", categoria: "destilados", preco: 18.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/gin-invictus-tropical-900ml.jpg" },
     { id: 81, nome: "Gin Invictus Maçã Verde", categoria: "destilados", preco: 18.00, volume: "900ml", descricao: "Garrafa 900ml.", imagem: "imagens/gin-invictus-maca-verde-900ml.jpg" },
-    { id: 82, nome: "Busca Brisa Psico Spirit", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "1L", descricao: "Garrafa 1L.", imagem: "imagens/busca-brisa-psico-spirit-1l.jpg" },
+    // [REMOVIDO POR ENQUANTO - tire as // para voltar] { id: 82, nome: "Busca Brisa Psico Spirit", categoria: "destilados", preco: 0.00, precoPendente: true, volume: "1L", descricao: "Garrafa 1L.", imagem: "imagens/busca-brisa-psico-spirit-1l.jpg" },
     { id: 83, nome: "Vinho Góes Quinta dos Vinhedos Tinto Seco", categoria: "destilados", preco: 23.00, volume: "1L", descricao: "Vinho de mesa tinto seco 1L.", imagem: "imagens/vinho-goes-quinta-vinhedos-tinto-seco-1l.jpg" },
     { id: 84, nome: "Vinho Góes Quinta dos Vinhedos Tinto Suave", categoria: "destilados", preco: 23.00, volume: "1L", descricao: "Vinho de mesa tinto suave 1L.", imagem: "imagens/vinho-goes-quinta-vinhedos-tinto-suave-1l.jpg" },
     { id: 85, nome: "Smirnoff Vodka", categoria: "destilados", preco: 40.00, volume: "", descricao: "Vodka.", imagem: "imagens/smirnoff-vodka.jpg" },
